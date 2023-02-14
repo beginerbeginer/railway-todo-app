@@ -6,7 +6,7 @@ import { Header } from '../components/Header'
 import './signin.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { signIn } from '../authSlice'
-import { url } from '../const'
+import { URL, HOME, SIGNUP } from '../const'
 
 export const SignIn = () => {
   const auth = useSelector((state) => state.auth.isSignIn)
@@ -20,18 +20,18 @@ export const SignIn = () => {
   const handlePasswordChange = (e) => setPassword(e.target.value)
   const onSignIn = () => {
     axios
-      .post(`${url}/signin`, { email: email, password: password })
+      .post(`${URL}/signin`, { email: email, password: password })
       .then((res) => {
         setCookie('token', res.data.token)
         dispatch(signIn())
-        navigation('/')
+        navigation(HOME.PATH)
       })
       .catch((err) => {
         setErrorMessage(`サインインに失敗しました。${err}`)
       })
   }
 
-  if (auth) return <navigation to="/" />
+  if (auth) return <navigation to={HOME.PATH} />
 
   return (
     <div>
@@ -52,7 +52,7 @@ export const SignIn = () => {
             サインイン
           </button>
         </form>
-        <Link to="/signup">新規作成</Link>
+        <Link to={SIGNUP.PATH}>新規作成</Link>
       </main>
     </div>
   )

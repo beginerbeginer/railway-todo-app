@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux/es/exports'
 import { useNavigate } from 'react-router-dom'
 import { signOut } from '../authSlice'
 import './header.css'
+import { SIGNIN } from '../const'
 
 export const Header = () => {
   const auth = useSelector((state) => state.auth.isSignIn)
@@ -13,7 +14,7 @@ export const Header = () => {
   const handleSignOut = () => {
     dispatch(signOut())
     removeCookie('token')
-    navigation('/signin')
+    navigation(SIGNIN.PATH)
   }
 
   return (

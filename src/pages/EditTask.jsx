@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Header } from '../components/Header'
 import axios from 'axios'
 import { useCookies } from 'react-cookie'
-import { url } from '../const'
+import { URL, HOME } from '../const'
 import { useNavigate, useParams } from 'react-router-dom'
 import './editTask.css'
 
@@ -26,14 +26,14 @@ export const EditTask = () => {
     }
 
     axios
-      .put(`${url}/lists/${listId}/tasks/${taskId}`, data, {
+      .put(`${URL}/lists/${listId}/tasks/${taskId}`, data, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
         },
       })
       .then((res) => {
         console.log(res.data)
-        navigation('/')
+        navigation(HOME.PATH)
       })
       .catch((err) => {
         setErrorMessage(`更新に失敗しました。${err}`)
@@ -42,13 +42,13 @@ export const EditTask = () => {
 
   const onDeleteTask = () => {
     axios
-      .delete(`${url}/lists/${listId}/tasks/${taskId}`, {
+      .delete(`${URL}/lists/${listId}/tasks/${taskId}`, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
         },
       })
       .then(() => {
-        navigation.push('/')
+        navigation(HOME.PATH)
       })
       .catch((err) => {
         setErrorMessage(`削除に失敗しました。${err}`)
@@ -57,7 +57,7 @@ export const EditTask = () => {
 
   useEffect(() => {
     axios
-      .get(`${url}/lists/${listId}/tasks/${taskId}`, {
+      .get(`${URL}/lists/${listId}/tasks/${taskId}`, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
         },

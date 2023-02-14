@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 import axios from 'axios'
 import { Header } from '../components/Header'
-import { url } from '../const'
+import { URL, LIST, TASK } from '../const'
 import './home.css'
 
 export const Home = () => {
@@ -16,7 +16,7 @@ export const Home = () => {
   const handleIsDoneDisplayChange = (e) => setIsDoneDisplay(e.target.value)
   useEffect(() => {
     axios
-      .get(`${url}/lists`, {
+      .get(`${URL}/lists`, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
         },
@@ -34,7 +34,7 @@ export const Home = () => {
     if (typeof listId !== 'undefined') {
       setSelectListId(listId)
       axios
-        .get(`${url}/lists/${listId}/tasks`, {
+        .get(`${URL}/lists/${listId}/tasks`, {
           headers: {
             authorization: `Bearer ${cookies.token}`,
           },
@@ -51,7 +51,7 @@ export const Home = () => {
   const handleSelectList = (id) => {
     setSelectListId(id)
     axios
-      .get(`${url}/lists/${id}/tasks`, {
+      .get(`${URL}/lists/${id}/tasks`, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
         },
@@ -73,7 +73,7 @@ export const Home = () => {
             <h2>リスト一覧</h2>
             <div className="list-menu">
               <p>
-                <Link to="/list/new">リスト新規作成</Link>
+                <Link to={LIST.NEW_PATH}>リスト新規作成</Link>
               </p>
               <p>
                 <Link to={`/lists/${selectListId}/edit`}>選択中のリストを編集</Link>
@@ -97,7 +97,7 @@ export const Home = () => {
           <div className="tasks">
             <div className="tasks-header">
               <h2>タスク一覧</h2>
-              <Link to="/task/new">タスク新規作成</Link>
+              <Link to={TASK.NEW_PATH}>タスク新規作成</Link>
             </div>
             <div className="display-select-wrapper">
               <select onChange={handleIsDoneDisplayChange} className="display-select">

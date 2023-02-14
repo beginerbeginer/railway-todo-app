@@ -3,7 +3,7 @@ import { useCookies } from 'react-cookie'
 import axios from 'axios'
 import { Header } from '../components/Header'
 import { useNavigate } from 'react-router-dom'
-import { url } from '../const'
+import { URL, HOME } from '../const'
 import './newList.css'
 
 export const NewList = () => {
@@ -18,13 +18,13 @@ export const NewList = () => {
     }
 
     axios
-      .post(`${url}/lists`, data, {
+      .post(`${URL}/lists`, data, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
         },
       })
       .then(() => {
-        navigation('/')
+        navigation(HOME.PATH)
       })
       .catch((err) => {
         setErrorMessage(`リストの作成に失敗しました。${err}`)
