@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Header } from '../components/Header'
-import { url } from '../const'
+import { URL, HOME } from '../const'
 import './editList.css'
 
 export const EditList = () => {
@@ -19,13 +19,13 @@ export const EditList = () => {
     }
 
     axios
-      .put(`${url}/lists/${listId}`, data, {
+      .put(`${URL}/lists/${listId}`, data, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
         },
       })
       .then(() => {
-        navigation('/')
+        navigation(HOME.PATH)
       })
       .catch((err) => {
         setErrorMessage(`更新に失敗しました。 ${err}`)
@@ -34,13 +34,13 @@ export const EditList = () => {
 
   const onDeleteList = () => {
     axios
-      .delete(`${url}/lists/${listId}`, {
+      .delete(`${URL}/lists/${listId}`, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
         },
       })
       .then(() => {
-        navigation('/')
+        navigation(HOME.PATH)
       })
       .catch((err) => {
         setErrorMessage(`削除に失敗しました。${err}`)
@@ -49,7 +49,7 @@ export const EditList = () => {
 
   useEffect(() => {
     axios
-      .get(`${url}/lists/${listId}`, {
+      .get(`${URL}/lists/${listId}`, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
         },

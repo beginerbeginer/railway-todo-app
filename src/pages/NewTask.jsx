@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useCookies } from 'react-cookie'
 import axios from 'axios'
-import { url } from '../const'
+import { URL, HOME } from '../const'
 import { Header } from '../components/Header'
 import './newTask.css'
 import { useNavigate } from 'react-router-dom'
@@ -25,13 +25,13 @@ export const NewTask = () => {
     }
 
     axios
-      .post(`${url}/lists/${selectListId}/tasks`, data, {
+      .post(`${URL}/lists/${selectListId}/tasks`, data, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
         },
       })
       .then(() => {
-        navigation('/')
+        navigation(HOME.PATH)
       })
       .catch((err) => {
         setErrorMessage(`タスクの作成に失敗しました。${err}`)
@@ -40,7 +40,7 @@ export const NewTask = () => {
 
   useEffect(() => {
     axios
-      .get(`${url}/lists`, {
+      .get(`${URL}/lists`, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
         },

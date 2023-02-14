@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { signIn } from '../authSlice'
 import { Header } from '../components/Header'
-import { url } from '../const'
+import { URL, HOME } from '../const'
 import './signUp.css'
 
 export const SignUp = () => {
@@ -28,18 +28,18 @@ export const SignUp = () => {
     }
 
     axios
-      .post(`${url}/users`, data)
+      .post(`${URL}/users`, data)
       .then((res) => {
         const token = res.data.token
         dispatch(signIn())
         setCookie('token', token)
-        navigation('/')
+        navigation(HOME.PATH)
       })
       .catch((err) => {
         setErrorMessge(`サインアップに失敗しました。 ${err}`)
       })
 
-    if (auth) return <navigation to="/" />
+    if (auth) return <navigation to={HOME.PATH} />
   }
   return (
     <div>
