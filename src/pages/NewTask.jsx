@@ -61,9 +61,13 @@ export const NewTask = () => {
         <h2>タスク新規作成</h2>
         <p className="error-message">{errorMessage}</p>
         <form className="new-task-form">
-          <label>リスト</label>
+          <label htmlFor="new-task-select-list">リスト</label>
           <br />
-          <select onChange={(e) => handleSelectList(e.target.value)} className="new-task-select-list">
+          <select
+            id="new-task-select-list"
+            onChange={(e) => handleSelectList(e.target.value)}
+            className="new-task-select-list"
+          >
             {lists.map((list, key) => (
               <option key={key} className="list-item" value={list.id}>
                 {list.title}
@@ -71,13 +75,13 @@ export const NewTask = () => {
             ))}
           </select>
           <br />
-          <label>タイトル</label>
+          <label htmlFor="new-task-title">タイトル</label>
           <br />
-          <input type="text" onChange={handleTitleChange} className="new-task-title" />
+          <input type="text" onChange={handleTitleChange} className="new-task-title" id="new-task-title" />
           <br />
-          <label>詳細</label>
+          <label htmlFor="new-task-detail">詳細</label>
           <br />
-          <textarea type="text" onChange={handleDetailChange} className="new-task-detail" />
+          <textarea type="text" onChange={handleDetailChange} className="new-task-detail" id="new-task-detail" />
           <br />
           <button type="button" className="new-task-button" onClick={onCreateTask}>
             作成

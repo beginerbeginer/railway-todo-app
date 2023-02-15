@@ -84,13 +84,18 @@ export const Home = () => {
             {lists.map((list, key) => {
               const isActive = list.id === selectListId
               return (
-                <li
+                <button
                   key={key}
                   className={`list-tab-item ${isActive ? 'active' : ''}`}
                   onClick={() => handleSelectList(list.id)}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter') {
+                      handleSelectList(list.id)
+                    }
+                  }}
                 >
                   {list.title}
-                </li>
+                </button>
               )
             })}
           </ul>

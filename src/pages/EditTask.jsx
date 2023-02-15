@@ -80,33 +80,25 @@ export const EditTask = () => {
         <h2>タスク編集</h2>
         <p className="error-message">{errorMessage}</p>
         <form className="edit-task-form">
-          <label>タイトル</label>
+          <label htmlFor="edit-task-title">タイトル</label>
           <br />
-          <input type="text" onChange={handleTitleChange} className="edit-task-title" value={title} />
+          <input
+            type="text"
+            id="edit-task-title"
+            className="edit-task-title"
+            value={title}
+            onChange={handleTitleChange}
+          />
           <br />
-          <label>詳細</label>
+          <label htmlFor="edit-task-detail">詳細</label>
           <br />
-          <textarea type="text" onChange={handleDetailChange} className="edit-task-detail" value={detail} />
+          <textarea id="edit-task-detail" onChange={handleDetailChange} className="edit-task-detail" value={detail} />
           <br />
           <div>
-            <input
-              type="radio"
-              id="todo"
-              name="status"
-              value="todo"
-              onChange={handleIsDoneChange}
-              checked={isDone === false ? 'checked' : ''}
-            />
-            未完了
-            <input
-              type="radio"
-              id="done"
-              name="status"
-              value="done"
-              onChange={handleIsDoneChange}
-              checked={isDone === true ? 'checked' : ''}
-            />
-            完了
+            <input type="radio" id="todo" name="status" value="todo" onChange={handleIsDoneChange} checked={!isDone} />
+            <label htmlFor="todo">未完了</label>
+            <input type="radio" id="done" name="status" value="done" onChange={handleIsDoneChange} checked={isDone} />
+            <label htmlFor="done">完了</label>
           </div>
           <button type="button" className="delete-task-button" onClick={onDeleteTask}>
             削除

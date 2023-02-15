@@ -38,9 +38,9 @@ export const NewList = () => {
         <h2>リスト新規作成</h2>
         <p className="error-message">{errorMessage}</p>
         <form className="new-list-form">
-          <label>タイトル</label>
+          <label htmlFor="new-list-title">タイトル</label>
           <br />
-          <input type="text" onChange={handleTitleChange} className="new-list-title" />
+          <input type="text" id="new-list-title" onChange={handleTitleChange} className="new-list-title" />
           <br />
           <button type="button" onClick={onCreateList} className="new-list-button">
             作成
