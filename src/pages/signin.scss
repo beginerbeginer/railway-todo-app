@@ -1,5 +1,12 @@
 @charset "utf-8";
 
+@mixin input-field {
+  width: 100%;
+  font-size: large;
+  height: 30px;
+  margin-bottom: 25px;
+}
+
 .signin {
   width: 500px;
   margin: 0 auto;
@@ -9,19 +16,18 @@
   margin: 25px 0;
 }
 
-.email-label, .password-label {
+.email-label,
+.password-label {
   color: #555555;
 }
 
-.email-input, .password-input {
-  width: 100%;
-  font-size: large;
-  height: 30px;
-  margin-bottom: 25px;
+.email-input,
+.password-input {
+  @include input-field;
 }
 
 .signin-button {
-  background-color: #242F9B;
+  background-color: #242f9b;
   color: #ffffff;
   width: 100px;
   height: 40px;
