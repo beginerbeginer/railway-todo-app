@@ -1,4 +1,6 @@
 @charset "utf-8";
+@import '../scss/common';
+@import '../scss/variable';
 
 .edit-task {
   width: 1000px;
@@ -8,29 +10,24 @@
     color: #555555;
     &-title,
     &-detail {
-      width: 300px;
-      margin-bottom: 25px;
+      @include middle-form;
     }
 
     .delete-task-button {
-      color: #ff3333;
-      border: solid 1px #ff3333;
-      width: 80px;
-      height: 40px;
+      color: $red;
+      border: solid 1px $red;
       margin: 25px 5px;
-      border-radius: 5px;
+      @include middle-button;
     }
 
     .edit-task-button {
-      background-color: #242f9b;
-      color: #ffffff;
-      width: 80px;
-      height: 40px;
-      border-radius: 5px;
+      background-color: $darkBlue;
+      color: $white;
+      @include middle-button;
     }
   }
 }
 
 .error-message {
-  color: #ff3333;
+  color: $red;
 }

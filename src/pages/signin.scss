@@ -1,11 +1,6 @@
 @charset "utf-8";
-
-@mixin input-field {
-  width: 100%;
-  font-size: large;
-  height: 30px;
-  margin-bottom: 25px;
-}
+@import '../scss/common';
+@import '../scss/variable';
 
 .signin {
   width: 500px;
@@ -18,7 +13,7 @@
 
 .email-label,
 .password-label {
-  color: #555555;
+  color: $gray;
 }
 
 .email-input,
@@ -27,13 +22,11 @@
 }
 
 .signin-button {
-  background-color: #242f9b;
-  color: #ffffff;
-  width: 100px;
-  height: 40px;
-  border-radius: 5px;
+  background-color: $darkBlue;
+  color: $white;
+  @include large-button;
 }
 
 .error-message {
-  color: #ff3333;
+  color: $red;
 }
