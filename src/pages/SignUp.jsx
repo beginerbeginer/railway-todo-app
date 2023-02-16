@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { signIn } from '../authSlice'
 import { Header } from '../components/Header'
 import { URL, HOME } from '../const'
@@ -39,7 +39,7 @@ export const SignUp = () => {
         setErrorMessge(`サインアップに失敗しました。 ${err}`)
       })
 
-    if (auth) return <navigation to={HOME.PATH} />
+    if (auth) return <Navigate to={HOME.PATH} />
   }
   return (
     <div>
