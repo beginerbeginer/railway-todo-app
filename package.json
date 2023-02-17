@@ -16,6 +16,7 @@
     "web-vitals": "^3.1.1"
   },
   "devDependencies": {
+    "dayjs": "^1.11.7",
     "eslint": "^8.34.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-react": "^7.32.2",
