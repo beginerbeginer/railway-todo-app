@@ -2,9 +2,16 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 import axios from 'axios'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import timezone from 'dayjs/plugin/timezone'
+import utc from 'dayjs/plugin/utc'
 import { Header } from '../components/Header'
 import { URL, LIST, TASK } from '../const'
 import './home.scss'
+dayjs.extend(relativeTime)
+dayjs.extend(timezone)
+dayjs.extend(utc)
 
 export const Home = () => {
   const [isDoneDisplay, setIsDoneDisplay] = useState('todo') // todo->未完了 done->完了
@@ -63,6 +70,19 @@ export const Home = () => {
         setErrorMessage(`タスクの取得に失敗しました。${err}`)
       })
   }
+
+  const getRemainingTime = (limitDate) => {
+    const diffTime = dayjs(limitDate).diff(dayjs())
+    const remainingDays = Math.floor(diffTime / (1000 * 60 * 60 * 24))
+    const remainingHours = Math.floor((diffTime / (1000 * 60 * 60)) % 24)
+
+    if (remainingDays <= 0 && remainingHours <= 0) {
+      return '期限切れ'
+    } else {
+      return `${remainingDays}日${remainingHours}時間`
+    }
+  }
+
   return (
     <div>
       <Header />
@@ -105,7 +125,12 @@ export const Home = () => {
                 <option value="done">完了</option>
               </select>
             </div>
-            <Tasks tasks={tasks} selectListId={selectListId} isDoneDisplay={isDoneDisplay} />
+            <Tasks
+              tasks={tasks}
+              selectListId={selectListId}
+              isDoneDisplay={isDoneDisplay}
+              getRemainingTime={getRemainingTime}
+            />
           </div>
         </div>
       </main>
@@ -115,8 +140,10 @@ export const Home = () => {
 
 // 表示するタスク
 const Tasks = (props) => {
-  const { tasks, selectListId, isDoneDisplay } = props
+  const { tasks, selectListId, isDoneDisplay, getRemainingTime } = props
   if (tasks === null) return <></>
+
+  const limitDate = dayjs(tasks.limitDate).tz(dayjs.tz.guess())
 
   if (isDoneDisplay === 'done') {
     return (
@@ -131,6 +158,8 @@ const Tasks = (props) => {
                 {task.title}
                 <br />
                 {task.done ? '完了' : '未完了'}
+                期限：{limitDate.format('YYYY/MM/DD HH:mm:ss')}
+                残り時間：{getRemainingTime(task.limit)}
               </Link>
             </li>
           ))}
@@ -150,6 +179,8 @@ const Tasks = (props) => {
               {task.title}
               <br />
               {task.done ? '完了' : '未完了'}
+              期限：{limitDate.format('YYYY/MM/DD HH:mm:ss')}
+              残り時間：{getRemainingTime(task.limit)}
             </Link>
           </li>
         ))}
