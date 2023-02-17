@@ -5,27 +5,51 @@ import { URL, HOME } from '../const'
 import { Header } from '../components/Header'
 import './newTask.scss'
 import { useNavigate } from 'react-router-dom'
+<<<<<<< HEAD
 import { getFormattedDeadLine } from '../util'
+=======
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+import timezone from 'dayjs/plugin/timezone'
+dayjs.locale('ja')
+dayjs.extend(utc)
+dayjs.extend(timezone)
+>>>>>>> a689194 (追加：タスク新規作成画面に期限を追加。)
 
 export const NewTask = () => {
   const [selectListId, setSelectListId] = useState()
   const [lists, setLists] = useState([])
   const [title, setTitle] = useState('')
   const [detail, setDetail] = useState('')
+<<<<<<< HEAD
   const [deadLine, setDeadLine] = useState('')
+=======
+  const [limit, setLimit] = useState('')
+>>>>>>> a689194 (追加：タスク新規作成画面に期限を追加。)
   const [errorMessage, setErrorMessage] = useState('')
   const [cookies] = useCookies()
   const navigation = useNavigate()
   const handleTitleChange = (e) => setTitle(e.target.value)
   const handleDetailChange = (e) => setDetail(e.target.value)
   const handleSelectList = (id) => setSelectListId(id)
+<<<<<<< HEAD
   const handleDeadLineChange = (e) => setDeadLine(e.target.value)
+=======
+  const handleLimitChange = (e) => setLimit(e.target.value)
+>>>>>>> a689194 (追加：タスク新規作成画面に期限を追加。)
   const onCreateTask = () => {
+    const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+    const formattedLimit = dayjs.tz(limit, userTimezone).utc().format()
+
     const data = {
       title: title,
       detail: detail,
       done: false,
+<<<<<<< HEAD
       limit: getFormattedDeadLine(deadLine),
+=======
+      limit: formattedLimit,
+>>>>>>> a689194 (追加：タスク新規作成画面に期限を追加。)
     }
 
     axios
@@ -85,7 +109,11 @@ export const NewTask = () => {
           <br />
           <label>期限</label>
           <br />
+<<<<<<< HEAD
           <input type="datetime-local" onChange={handleDeadLineChange} className="new-task-limit" />
+=======
+          <input type="datetime-local" onChange={handleLimitChange} className="new-task-limit" />
+>>>>>>> a689194 (追加：タスク新規作成画面に期限を追加。)
           <br />
           <button type="button" className="new-task-button" onClick={onCreateTask}>
             作成
