@@ -77,7 +77,7 @@ export const Home = () => {
     const remainingHours = Math.floor((diffTime / (1000 * 60 * 60)) % 24)
 
     if (remainingDays <= 0 && remainingHours <= 0) {
-      return '期限切れ'
+      return <span className="overdue">期限切れ</span>
     } else {
       return `${remainingDays}日${remainingHours}時間`
     }
@@ -143,8 +143,6 @@ const Tasks = (props) => {
   const { tasks, selectListId, isDoneDisplay, getRemainingTime } = props
   if (tasks === null) return <></>
 
-  const limitDate = dayjs(tasks.limitDate).tz(dayjs.tz.guess())
-
   if (isDoneDisplay === 'done') {
     return (
       <ul>
@@ -152,17 +150,20 @@ const Tasks = (props) => {
           .filter((task) => {
             return task.done === true
           })
-          .map((task, key) => (
-            <li key={key} className="task-item">
-              <Link to={`/lists/${selectListId}/tasks/${task.id}`} className="task-item-link">
-                {task.title}
-                <br />
-                {task.done ? '完了' : '未完了'}
-                期限：{limitDate.format('YYYY/MM/DD HH:mm:ss')}
-                残り時間：{getRemainingTime(task.limit)}
-              </Link>
-            </li>
-          ))}
+          .map((task, key) => {
+            const limitDate = dayjs(task.limit).tz(dayjs.tz.guess())
+            return (
+              <li key={key} className="task-item">
+                <Link to={`/lists/${selectListId}/tasks/${task.id}`} className="task-item-link">
+                  {task.title}
+                  <br />
+                  {task.done ? '完了' : '未完了'}
+                  期限：{limitDate.format('YYYY/MM/DD HH:mm:ss')}
+                  残り日時：{getRemainingTime(task.limit)}
+                </Link>
+              </li>
+            )
+          })}
       </ul>
     )
   }
@@ -173,17 +174,20 @@ const Tasks = (props) => {
         .filter((task) => {
           return task.done === false
         })
-        .map((task, key) => (
-          <li key={key} className="task-item">
-            <Link to={`/lists/${selectListId}/tasks/${task.id}`} className="task-item-link">
-              {task.title}
-              <br />
-              {task.done ? '完了' : '未完了'}
-              期限：{limitDate.format('YYYY/MM/DD HH:mm:ss')}
-              残り時間：{getRemainingTime(task.limit)}
-            </Link>
-          </li>
-        ))}
+        .map((task, key) => {
+          const limitDate = dayjs(task.limit).tz(dayjs.tz.guess())
+          return (
+            <li key={key} className="task-item">
+              <Link to={`/lists/${selectListId}/tasks/${task.id}`} className="task-item-link">
+                {task.title}
+                <br />
+                {task.done ? '完了' : '未完了'}
+                期限：{limitDate.format('YYYY/MM/DD HH:mm:ss')}
+                残り日時：{getRemainingTime(task.limit)}
+              </Link>
+            </li>
+          )
+        })}
     </ul>
   )
 }
