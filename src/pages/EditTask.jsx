@@ -28,7 +28,7 @@ export const EditTask = () => {
       title: title,
       detail: detail,
       done: isDone,
-      limit: limit,
+      limit: dayjs.utc(limit).format('YYYY-MM-DDTHH:mm:ss[Z]'),
     }
 
     axios
