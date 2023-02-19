@@ -3,9 +3,13 @@ import { Link } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 import axios from 'axios'
 import dayjs from 'dayjs'
+import timezone from 'dayjs/plugin/timezone'
+import utc from 'dayjs/plugin/utc'
 import { Header } from '../components/Header'
 import { URL, LIST, TASK } from '../const'
 import './home.scss'
+dayjs.extend(timezone)
+dayjs.extend(utc)
 
 export const Home = () => {
   const [isDoneDisplay, setIsDoneDisplay] = useState('todo') // todo->未完了 done->完了
@@ -145,15 +149,13 @@ const Tasks = (props) => {
             return task.done === true
           })
           .map((task, key) => {
-            const limitDate = dayjs(task.limit).tz(dayjs.tz.guess())
+            const limitDate = dayjs(task.limit).tz(dayjs.tz.guess()).format('YYYY/MM/DD HH:mm')
             return (
               <li key={key} className="task-item">
                 <Link to={`/lists/${selectListId}/tasks/${task.id}`} className="task-item-link">
                   {task.title}
                   <br />
-                  {task.done ? '完了' : '未完了'}
-                  期限：{limitDate.format('YYYY/MM/DD HH:mm:ss')}
-                  残り日時：{getRemainingTime(task.limit)}
+                  {task.done ? '完了' : '未完了'}, 期限：{limitDate}, 残り日時：{getRemainingTime(task.limit)}
                 </Link>
               </li>
             )
@@ -169,15 +171,13 @@ const Tasks = (props) => {
           return task.done === false
         })
         .map((task, key) => {
-          const limitDate = dayjs(task.limit).tz(dayjs.tz.guess())
+          const limitDate = dayjs(task.limit).tz(dayjs.tz.guess()).format('YYYY/MM/DD HH:mm')
           return (
             <li key={key} className="task-item">
               <Link to={`/lists/${selectListId}/tasks/${task.id}`} className="task-item-link">
                 {task.title}
                 <br />
-                {task.done ? '完了' : '未完了'}
-                期限：{limitDate.format('YYYY/MM/DD HH:mm:ss')}
-                残り日時：{getRemainingTime(task.limit)}
+                {task.done ? '完了' : '未完了'}, 期限：{limitDate}, 残り日時：{getRemainingTime(task.limit)}
               </Link>
             </li>
           )
