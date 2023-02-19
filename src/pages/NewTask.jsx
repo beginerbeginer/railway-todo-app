@@ -21,9 +21,6 @@ export const NewTask = () => {
   const handleSelectList = (id) => setSelectListId(id)
   const handleDeadLineChange = (e) => setDeadLine(e.target.value)
   const onCreateTask = () => {
-    const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
-    const formattedLimit = dayjs.tz(limit, userTimezone).utc().format()
-
     const data = {
       title: title,
       detail: detail,

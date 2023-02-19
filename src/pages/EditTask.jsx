@@ -7,7 +7,6 @@ import { useNavigate, useParams } from 'react-router-dom'
 import dayjs from 'dayjs'
 import { getFormattedDeadLine } from '../util'
 import './editTask.scss'
-dayjs.locale('ja')
 
 export const EditTask = () => {
   const navigation = useNavigate()
