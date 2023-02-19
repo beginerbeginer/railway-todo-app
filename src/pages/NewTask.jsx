@@ -6,11 +6,6 @@ import { Header } from '../components/Header'
 import './newTask.scss'
 import { useNavigate } from 'react-router-dom'
 import dayjs from 'dayjs'
-import utc from 'dayjs/plugin/utc'
-import timezone from 'dayjs/plugin/timezone'
-dayjs.locale('ja')
-dayjs.extend(utc)
-dayjs.extend(timezone)
 
 export const NewTask = () => {
   const [selectListId, setSelectListId] = useState()
