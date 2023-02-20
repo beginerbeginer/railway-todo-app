@@ -68,7 +68,6 @@ export const Home = () => {
   }
 
   const handleKeyDown = (event) => {
-<<<<<<< HEAD
     const currentIndex = lists.findIndex((list) => list.id === selectListId)
     switch (event.key) {
       case 'Enter': {
@@ -103,46 +102,6 @@ export const Home = () => {
       .catch((err) => {
         setErrorMessage(`タスクの取得に失敗しました。${err}`)
       })
-=======
-    if (event.key === 'Enter') {
-      const id = event.target.id
-      handleSelectList(id)
-    } else if (event.key === 'ArrowLeft') {
-      const currentIndex = lists.findIndex((list) => list.id === selectListId)
-      const previousIndex = (currentIndex - 1 + lists.length) % lists.length
-      const previousList = lists[previousIndex]
-      setSelectListId(previousList.id)
-      axios
-        .get(`${URL}/lists/${previousList.id}/tasks`, {
-          headers: {
-            authorization: `Bearer ${cookies.token}`,
-          },
-        })
-        .then((res) => {
-          setTasks(res.data.tasks)
-        })
-        .catch((err) => {
-          setErrorMessage(`タスクの取得に失敗しました。${err}`)
-        })
-    } else if (event.key === 'ArrowRight') {
-      const currentIndex = lists.findIndex((list) => list.id === selectListId)
-      const nextIndex = (currentIndex + 1) % lists.length
-      const nextList = lists[nextIndex]
-      setSelectListId(nextList.id)
-      axios
-        .get(`${URL}/lists/${nextList.id}/tasks`, {
-          headers: {
-            authorization: `Bearer ${cookies.token}`,
-          },
-        })
-        .then((res) => {
-          setTasks(res.data.tasks)
-        })
-        .catch((err) => {
-          setErrorMessage(`タスクの取得に失敗しました。${err}`)
-        })
-    }
->>>>>>> c962323 (追加：tabキーでリストを選択を可能に、左右の矢印キーの操作でタスクを自動取得できる関数)
   }
 
   const getRemainingTime = (limitDate) => {
@@ -188,11 +147,8 @@ export const Home = () => {
                   onKeyDown={handleKeyDown}
                   tabIndex={0}
                   id={list.id}
-<<<<<<< HEAD
                   role="button"
                   aria-label={list.title}
-=======
->>>>>>> c962323 (追加：tabキーでリストを選択を可能に、左右の矢印キーの操作でタスクを自動取得できる関数)
                 >
                   {list.title}
                 </li>
