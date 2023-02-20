@@ -4,12 +4,10 @@ import { useCookies } from 'react-cookie'
 import axios from 'axios'
 import dayjs from 'dayjs'
 import timezone from 'dayjs/plugin/timezone'
-import utc from 'dayjs/plugin/utc'
 import { Header } from '../components/Header'
 import { URL, LIST, TASK } from '../const'
 import './home.scss'
 dayjs.extend(timezone)
-dayjs.extend(utc)
 
 export const Home = () => {
   const [isDoneDisplay, setIsDoneDisplay] = useState('todo') // todo->未完了 done->完了
