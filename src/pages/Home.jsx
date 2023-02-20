@@ -147,6 +147,8 @@ export const Home = () => {
                   onKeyDown={handleKeyDown}
                   tabIndex={0}
                   id={list.id}
+                  role="button"
+                  aria-label={list.title}
                 >
                   {list.title}
                 </li>
