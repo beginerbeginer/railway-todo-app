@@ -5,6 +5,7 @@ import { useCookies } from 'react-cookie'
 import { URL, HOME } from '../const'
 import { useNavigate, useParams } from 'react-router-dom'
 import dayjs from 'dayjs'
+import { getFormattedLimit } from '../util'
 import './editTask.scss'
 
 export const EditTask = () => {
@@ -26,7 +27,7 @@ export const EditTask = () => {
       title: title,
       detail: detail,
       done: isDone,
-      limit: dayjs.utc(limit).format('YYYY-MM-DDTHH:mm:ss[Z]'),
+      limit: getFormattedLimit(limit),
     }
 
     axios

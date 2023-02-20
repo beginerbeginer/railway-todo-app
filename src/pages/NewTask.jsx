@@ -5,7 +5,7 @@ import { URL, HOME } from '../const'
 import { Header } from '../components/Header'
 import './newTask.scss'
 import { useNavigate } from 'react-router-dom'
-import dayjs from 'dayjs'
+import { getFormattedLimit } from '../util'
 
 export const NewTask = () => {
   const [selectListId, setSelectListId] = useState()
@@ -21,13 +21,11 @@ export const NewTask = () => {
   const handleSelectList = (id) => setSelectListId(id)
   const handleLimitChange = (e) => setLimit(e.target.value)
   const onCreateTask = () => {
-    const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
-    const formattedLimit = dayjs.tz(limit, userTimezone).utc().format()
     const data = {
       title: title,
       detail: detail,
       done: false,
-      limit: formattedLimit,
+      limit: getFormattedLimit(limit),
     }
 
     axios
