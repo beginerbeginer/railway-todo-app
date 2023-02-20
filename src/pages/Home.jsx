@@ -69,14 +69,15 @@ export const Home = () => {
 
   const getRemainingTime = (limitDate) => {
     const diffTime = dayjs(limitDate).diff(dayjs())
+    const formattedDate = dayjs(limitDate).tz(dayjs.tz.guess()).format('YYYY/MM/DD HH:mm')
     const remainingDays = Math.floor(diffTime / (1000 * 60 * 60 * 24))
     const remainingHours = Math.floor((diffTime / (1000 * 60 * 60)) % 24)
-    const formattedDate = dayjs(limitDate).tz(dayjs.tz.guess()).format('YYYY/MM/DD HH:mm')
+    const remainingMinutes = Math.floor((diffTime / (1000 * 60)) % 60)
 
-    if (remainingDays <= 0 && remainingHours <= 0) {
+    if (remainingDays <= 0 && remainingHours <= 0 && remainingMinutes <= 0) {
       return <span className="overdue">期限切れ</span>
     } else {
-      return `${formattedDate}, 残り日時：${remainingDays}日${remainingHours}時間`
+      return `${formattedDate}, 残り日時：${remainingDays}日${remainingHours}時間${remainingMinutes}分`
     }
   }
 
