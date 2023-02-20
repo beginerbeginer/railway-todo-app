@@ -71,11 +71,12 @@ export const Home = () => {
     const diffTime = dayjs(limitDate).diff(dayjs())
     const remainingDays = Math.floor(diffTime / (1000 * 60 * 60 * 24))
     const remainingHours = Math.floor((diffTime / (1000 * 60 * 60)) % 24)
+    const formattedDate = dayjs(limitDate).tz(dayjs.tz.guess()).format('YYYY/MM/DD HH:mm')
 
     if (remainingDays <= 0 && remainingHours <= 0) {
       return <span className="overdue">期限切れ</span>
     } else {
-      return `${remainingDays}日${remainingHours}時間`
+      return `${formattedDate}, 残り日時：${remainingDays}日${remainingHours}時間`
     }
   }
 
@@ -147,13 +148,12 @@ const Tasks = (props) => {
             return task.done === true
           })
           .map((task, key) => {
-            const limitDate = dayjs(task.limit).tz(dayjs.tz.guess()).format('YYYY/MM/DD HH:mm')
             return (
               <li key={key} className="task-item">
                 <Link to={`/lists/${selectListId}/tasks/${task.id}`} className="task-item-link">
                   {task.title}
                   <br />
-                  {task.done ? '完了' : '未完了'}, 期限：{limitDate}, 残り日時：{getRemainingTime(task.limit)}
+                  {task.done ? '完了' : '未完了'}, 期限：{getRemainingTime(task.limit)}
                 </Link>
               </li>
             )
@@ -169,13 +169,12 @@ const Tasks = (props) => {
           return task.done === false
         })
         .map((task, key) => {
-          const limitDate = dayjs(task.limit).tz(dayjs.tz.guess()).format('YYYY/MM/DD HH:mm')
           return (
             <li key={key} className="task-item">
               <Link to={`/lists/${selectListId}/tasks/${task.id}`} className="task-item-link">
                 {task.title}
                 <br />
-                {task.done ? '完了' : '未完了'}, 期限：{limitDate}, 残り日時：{getRemainingTime(task.limit)}
+                {task.done ? '完了' : '未完了'}, 期限：{getRemainingTime(task.limit)}
               </Link>
             </li>
           )
