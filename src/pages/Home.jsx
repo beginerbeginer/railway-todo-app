@@ -109,30 +109,13 @@ export const Home = () => {
     const formattedDate = dayjs(limitDate).tz(dayjs.tz.guess()).format('YYYY/MM/DD HH:mm')
     const remainingDays = Math.floor(diffTime / (1000 * 60 * 60 * 24))
     const remainingHours = Math.floor((diffTime / (1000 * 60 * 60)) % 24)
-<<<<<<< HEAD
-<<<<<<< HEAD
     const remainingMinutes = Math.floor((diffTime / (1000 * 60)) % 60)
     const remainingSeconds = Math.floor((diffTime / 1000) % 60)
-=======
-    const formattedDate = dayjs(limitDate).tz(dayjs.tz.guess()).format('YYYY/MM/DD HH:mm')
->>>>>>> 5e780ac (修正：残り時間の画面表示方法)
 
     if (remainingDays <= 0 && remainingHours <= 0 && remainingMinutes <= 0 && remainingSeconds <= 0) {
       return <span className="overdue">期限切れ</span>
     } else {
-<<<<<<< HEAD
       return `${formattedDate}, 残り日時：${remainingDays}日${remainingHours}時間${remainingMinutes}分${remainingSeconds}秒`
-=======
-      return `${formattedDate}, 残り日時：${remainingDays}日${remainingHours}時間`
->>>>>>> 5e780ac (修正：残り時間の画面表示方法)
-=======
-    const remainingMinutes = Math.floor((diffTime / (1000 * 60)) % 60)
-
-    if (remainingDays <= 0 && remainingHours <= 0 && remainingMinutes <= 0) {
-      return <span className="overdue">期限切れ</span>
-    } else {
-      return `${formattedDate}, 残り日時：${remainingDays}日${remainingHours}時間${remainingMinutes}分`
->>>>>>> e4d835f (追加：残りの分)
     }
   }
 
@@ -201,7 +184,6 @@ const Tasks = (props) => {
   const { tasks, selectListId, isDoneDisplay, getRemainingTime } = props
   if (tasks === null) return <></>
 
-<<<<<<< HEAD
   const filteredTasks = tasks.filter((task) => {
     return isDoneDisplay === 'done' ? task.done : !task.done
   })
@@ -218,47 +200,6 @@ const Tasks = (props) => {
           </li>
         )
       })}
-=======
-  if (isDoneDisplay === 'done') {
-    return (
-      <ul>
-        {tasks
-          .filter((task) => {
-            return task.done === true
-          })
-          .map((task, key) => {
-            return (
-              <li key={key} className="task-item">
-                <Link to={`/lists/${selectListId}/tasks/${task.id}`} className="task-item-link">
-                  {task.title}
-                  <br />
-                  {task.done ? '完了' : '未完了'}, 期限：{getRemainingTime(task.limit)}
-                </Link>
-              </li>
-            )
-          })}
-      </ul>
-    )
-  }
-
-  return (
-    <ul>
-      {tasks
-        .filter((task) => {
-          return task.done === false
-        })
-        .map((task, key) => {
-          return (
-            <li key={key} className="task-item">
-              <Link to={`/lists/${selectListId}/tasks/${task.id}`} className="task-item-link">
-                {task.title}
-                <br />
-                {task.done ? '完了' : '未完了'}, 期限：{getRemainingTime(task.limit)}
-              </Link>
-            </li>
-          )
-        })}
->>>>>>> 5e780ac (修正：残り時間の画面表示方法)
     </ul>
   )
 }
