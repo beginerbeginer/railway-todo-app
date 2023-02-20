@@ -67,9 +67,50 @@ export const Home = () => {
       })
   }
 
-  const getRemainingTime = (deadLine) => {
-    const diffTime = dayjs(deadLine).diff(dayjs())
-    const formattedDate = dayjs(deadLine).tz(dayjs.tz.guess()).format('YYYY/MM/DD HH:mm')
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      const id = event.target.id
+      handleSelectList(id)
+    } else if (event.key === 'ArrowLeft') {
+      const currentIndex = lists.findIndex((list) => list.id === selectListId)
+      const previousIndex = (currentIndex - 1 + lists.length) % lists.length
+      const previousList = lists[previousIndex]
+      setSelectListId(previousList.id)
+      axios
+        .get(`${URL}/lists/${previousList.id}/tasks`, {
+          headers: {
+            authorization: `Bearer ${cookies.token}`,
+          },
+        })
+        .then((res) => {
+          setTasks(res.data.tasks)
+        })
+        .catch((err) => {
+          setErrorMessage(`タスクの取得に失敗しました。${err}`)
+        })
+    } else if (event.key === 'ArrowRight') {
+      const currentIndex = lists.findIndex((list) => list.id === selectListId)
+      const nextIndex = (currentIndex + 1) % lists.length
+      const nextList = lists[nextIndex]
+      setSelectListId(nextList.id)
+      axios
+        .get(`${URL}/lists/${nextList.id}/tasks`, {
+          headers: {
+            authorization: `Bearer ${cookies.token}`,
+          },
+        })
+        .then((res) => {
+          setTasks(res.data.tasks)
+        })
+        .catch((err) => {
+          setErrorMessage(`タスクの取得に失敗しました。${err}`)
+        })
+    }
+  }
+
+  const getRemainingTime = (limitDate) => {
+    const diffTime = dayjs(limitDate).diff(dayjs())
+    const formattedDate = dayjs(limitDate).tz(dayjs.tz.guess()).format('YYYY/MM/DD HH:mm')
     const remainingDays = Math.floor(diffTime / (1000 * 60 * 60 * 24))
     const remainingHours = Math.floor((diffTime / (1000 * 60 * 60)) % 24)
     const remainingMinutes = Math.floor((diffTime / (1000 * 60)) % 60)
@@ -107,6 +148,9 @@ export const Home = () => {
                   key={key}
                   className={`list-tab-item ${isActive ? 'active' : ''}`}
                   onClick={() => handleSelectList(list.id)}
+                  onKeyDown={handleKeyDown}
+                  tabIndex={0}
+                  id={list.id}
                 >
                   {list.title}
                 </li>
