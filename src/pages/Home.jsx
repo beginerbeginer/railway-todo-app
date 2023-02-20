@@ -141,45 +141,22 @@ const Tasks = (props) => {
   const { tasks, selectListId, isDoneDisplay, getRemainingTime } = props
   if (tasks === null) return <></>
 
-  if (isDoneDisplay === 'done') {
-    return (
-      <ul>
-        {tasks
-          .filter((task) => {
-            return task.done === true
-          })
-          .map((task, key) => {
-            return (
-              <li key={key} className="task-item">
-                <Link to={`/lists/${selectListId}/tasks/${task.id}`} className="task-item-link">
-                  {task.title}
-                  <br />
-                  {task.done ? '完了' : '未完了'}, 期限：{getRemainingTime(task.limit)}
-                </Link>
-              </li>
-            )
-          })}
-      </ul>
-    )
-  }
-
+  const filteredTasks = tasks.filter((task) => {
+    return isDoneDisplay === 'done' ? task.done : !task.done
+  })
   return (
     <ul>
-      {tasks
-        .filter((task) => {
-          return task.done === false
-        })
-        .map((task, key) => {
-          return (
-            <li key={key} className="task-item">
-              <Link to={`/lists/${selectListId}/tasks/${task.id}`} className="task-item-link">
-                {task.title}
-                <br />
-                {task.done ? '完了' : '未完了'}, 期限：{getRemainingTime(task.limit)}
-              </Link>
-            </li>
-          )
-        })}
+      {filteredTasks.map((task, key) => {
+        return (
+          <li key={key} className="task-item">
+            <Link to={`/lists/${selectListId}/tasks/${task.id}`} className="task-item-link">
+              {task.title}
+              <br />
+              {task.done ? '完了' : '未完了'}, 期限：{getRemainingTime(task.limit)}
+            </Link>
+          </li>
+        )
+      })}
     </ul>
   )
 }
