@@ -8,5 +8,7 @@ module.exports = {
     sourceType: 'module',
     ecmaFeatures: { jsx: true },
   },
-  rules: {},
+  rules: {
+    'no-unused-vars': ['error', { varsIgnorePattern: '^_' }], // react-cookieで使わない定数を許容するために追加。
+  },
 }
