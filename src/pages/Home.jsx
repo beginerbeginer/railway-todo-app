@@ -67,9 +67,9 @@ export const Home = () => {
       })
   }
 
-  const getRemainingTime = (limitDate) => {
-    const diffTime = dayjs(limitDate).diff(dayjs())
-    const formattedDate = dayjs(limitDate).tz(dayjs.tz.guess()).format('YYYY/MM/DD HH:mm')
+  const getRemainingTime = (deadLine) => {
+    const diffTime = dayjs(deadLine).diff(dayjs())
+    const formattedDate = dayjs(deadLine).tz(dayjs.tz.guess()).format('YYYY/MM/DD HH:mm')
     const remainingDays = Math.floor(diffTime / (1000 * 60 * 60 * 24))
     const remainingHours = Math.floor((diffTime / (1000 * 60 * 60)) % 24)
     const remainingMinutes = Math.floor((diffTime / (1000 * 60)) % 60)

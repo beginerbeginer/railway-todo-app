@@ -5,7 +5,7 @@ import { useCookies } from 'react-cookie'
 import { URL, HOME } from '../const'
 import { useNavigate, useParams } from 'react-router-dom'
 import dayjs from 'dayjs'
-import { getFormattedLimit } from '../util'
+import { getFormattedDeadLine } from '../util'
 import './editTask.scss'
 
 export const EditTask = () => {
@@ -15,19 +15,19 @@ export const EditTask = () => {
   const [title, setTitle] = useState('')
   const [detail, setDetail] = useState('')
   const [isDone, setIsDone] = useState()
-  const [limit, setLimit] = useState('')
+  const [deadLine, setDeadLine] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   const handleTitleChange = (e) => setTitle(e.target.value)
   const handleDetailChange = (e) => setDetail(e.target.value)
   const handleIsDoneChange = (e) => setIsDone(e.target.value === 'done')
-  const handlelimitChange = (e) => setLimit(e.target.value)
+  const handledeadLineChange = (e) => setDeadLine(e.target.value)
   const onUpdateTask = () => {
     console.log(isDone)
     const data = {
       title: title,
       detail: detail,
       done: isDone,
-      limit: getFormattedLimit(limit),
+      limit: getFormattedDeadLine(deadLine),
     }
 
     axios
@@ -72,7 +72,7 @@ export const EditTask = () => {
         setTitle(task.title)
         setDetail(task.detail)
         setIsDone(task.done)
-        setLimit(dayjs(task.limit).format('YYYY-MM-DDTHH:mm'))
+        setDeadLine(dayjs(task.limit).format('YYYY-MM-DDTHH:mm'))
       })
       .catch((err) => {
         setErrorMessage(`タスク情報の取得に失敗しました。${err}`)
@@ -96,7 +96,12 @@ export const EditTask = () => {
           <br />
           <label>期限</label>
           <br />
-          <input type="datetime-local" onChange={handlelimitChange} className="edit-task-due-date" value={limit} />
+          <input
+            type="datetime-local"
+            onChange={handledeadLineChange}
+            className="edit-task-due-date"
+            value={deadLine}
+          />
           <br />
           <div>
             <input

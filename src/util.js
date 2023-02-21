@@ -4,7 +4,7 @@ import timezone from 'dayjs/plugin/timezone'
 dayjs.extend(utc)
 dayjs.extend(timezone)
 
-export const getFormattedLimit = (limit) => {
+export const getFormattedDeadLine = (deadLine) => {
   const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
-  return dayjs.tz(limit, userTimezone).utc().format('YYYY-MM-DDTHH:mm:ss[Z]')
+  return dayjs.tz(deadLine, userTimezone).utc().format('YYYY-MM-DDTHH:mm:ss[Z]')
 }
