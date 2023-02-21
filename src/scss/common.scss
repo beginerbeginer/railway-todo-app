@@ -1,0 +1,23 @@
+@mixin input-field {
+  width: 100%;
+  font-size: large;
+  height: 30px;
+  margin-bottom: 25px;
+}
+
+@mixin large-button {
+  width: 100px;
+  height: 40px;
+  border-radius: 5px;
+}
+
+@mixin middle-button {
+  width: 80px;
+  height: 40px;
+  border-radius: 5px;
+}
+
+@mixin middle-form {
+  width: 300px;
+  margin-bottom: 25px;
+}

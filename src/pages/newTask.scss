@@ -1,0 +1,32 @@
+@charset "utf-8";
+@import '../scss/common';
+@import '../scss/variable';
+
+.new-task {
+  width: 1000px;
+  margin: 0 auto;
+
+  &-form {
+    color: $gray;
+
+    &-select-list,
+    &-title,
+    &-detail {
+      @include middle-form;
+    }
+
+    &-detail {
+      height: 200px;
+    }
+  }
+
+  &-button {
+    background-color: $darkBlue;
+    color: $white;
+    @include middle-button;
+  }
+}
+
+.error-message {
+  color: $red;
+}

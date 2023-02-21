@@ -1,0 +1,33 @@
+@charset "utf-8";
+@import '../scss/common';
+@import '../scss/variable';
+
+.edit-task {
+  width: 1000px;
+  margin: 0 auto;
+
+  &-form {
+    color: #555555;
+    &-title,
+    &-detail {
+      @include middle-form;
+    }
+
+    .delete-task-button {
+      color: $red;
+      border: solid 1px $red;
+      margin: 25px 5px;
+      @include middle-button;
+    }
+
+    .edit-task-button {
+      background-color: $darkBlue;
+      color: $white;
+      @include middle-button;
+    }
+  }
+}
+
+.error-message {
+  color: $red;
+}

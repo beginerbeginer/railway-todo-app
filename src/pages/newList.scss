@@ -1,0 +1,22 @@
+@charset "utf-8";
+@import '../scss/common';
+@import '../scss/variable';
+
+.new-list {
+  width: 1000px;
+  margin: 0 auto;
+
+  &-form {
+    color: $gray;
+
+    &-title {
+      @include middle-form;
+    }
+
+    &-button {
+      background-color: $darkBlue;
+      color: $white;
+      @include middle-button;
+    }
+  }
+}

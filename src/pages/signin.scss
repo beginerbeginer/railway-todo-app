@@ -1,0 +1,32 @@
+@charset "utf-8";
+@import '../scss/common';
+@import '../scss/variable';
+
+.signin {
+  width: 500px;
+  margin: 0 auto;
+}
+
+.signin-form {
+  margin: 25px 0;
+}
+
+.email-label,
+.password-label {
+  color: $gray;
+}
+
+.email-input,
+.password-input {
+  @include input-field;
+}
+
+.signin-button {
+  background-color: $darkBlue;
+  color: $white;
+  @include large-button;
+}
+
+.error-message {
+  color: $red;
+}
