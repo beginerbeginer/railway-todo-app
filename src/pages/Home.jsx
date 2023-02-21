@@ -73,11 +73,12 @@ export const Home = () => {
     const remainingDays = Math.floor(diffTime / (1000 * 60 * 60 * 24))
     const remainingHours = Math.floor((diffTime / (1000 * 60 * 60)) % 24)
     const remainingMinutes = Math.floor((diffTime / (1000 * 60)) % 60)
+    const remainingSeconds = Math.floor((diffTime / 1000) % 60)
 
-    if (remainingDays <= 0 && remainingHours <= 0 && remainingMinutes <= 0) {
+    if (remainingDays <= 0 && remainingHours <= 0 && remainingMinutes <= 0 && remainingSeconds <= 0) {
       return <span className="overdue">期限切れ</span>
     } else {
-      return `${formattedDate}, 残り日時：${remainingDays}日${remainingHours}時間${remainingMinutes}分`
+      return `${formattedDate}, 残り日時：${remainingDays}日${remainingHours}時間${remainingMinutes}分${remainingSeconds}秒`
     }
   }
 
