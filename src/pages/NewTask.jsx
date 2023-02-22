@@ -5,23 +5,27 @@ import { URL, HOME } from '../const'
 import { Header } from '../components/Header'
 import './newTask.scss'
 import { useNavigate } from 'react-router-dom'
+import { getFormattedDeadLine } from '../util'
 
 export const NewTask = () => {
   const [selectListId, setSelectListId] = useState()
   const [lists, setLists] = useState([])
   const [title, setTitle] = useState('')
   const [detail, setDetail] = useState('')
+  const [deadLine, setDeadLine] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   const [cookies] = useCookies()
   const navigation = useNavigate()
   const handleTitleChange = (e) => setTitle(e.target.value)
   const handleDetailChange = (e) => setDetail(e.target.value)
   const handleSelectList = (id) => setSelectListId(id)
+  const handleDeadLineChange = (e) => setDeadLine(e.target.value)
   const onCreateTask = () => {
     const data = {
       title: title,
       detail: detail,
       done: false,
+      limit: getFormattedDeadLine(deadLine),
     }
 
     axios
@@ -78,6 +82,10 @@ export const NewTask = () => {
           <label>詳細</label>
           <br />
           <textarea type="text" onChange={handleDetailChange} className="new-task-detail" />
+          <br />
+          <label>期限</label>
+          <br />
+          <input type="datetime-local" onChange={handleDeadLineChange} className="new-task-limit" />
           <br />
           <button type="button" className="new-task-button" onClick={onCreateTask}>
             作成

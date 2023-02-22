@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 import axios from 'axios'
+import dayjs from 'dayjs'
+import timezone from 'dayjs/plugin/timezone'
 import { Header } from '../components/Header'
 import { URL, LIST, TASK } from '../const'
 import './home.scss'
+dayjs.extend(timezone)
 
 export const Home = () => {
   const [isDoneDisplay, setIsDoneDisplay] = useState('todo') // todo->未完了 done->完了
@@ -63,6 +66,22 @@ export const Home = () => {
         setErrorMessage(`タスクの取得に失敗しました。${err}`)
       })
   }
+
+  const getRemainingTime = (deadLine) => {
+    const diffTime = dayjs(deadLine).diff(dayjs())
+    const formattedDate = dayjs(deadLine).tz(dayjs.tz.guess()).format('YYYY/MM/DD HH:mm')
+    const remainingDays = Math.floor(diffTime / (1000 * 60 * 60 * 24))
+    const remainingHours = Math.floor((diffTime / (1000 * 60 * 60)) % 24)
+    const remainingMinutes = Math.floor((diffTime / (1000 * 60)) % 60)
+    const remainingSeconds = Math.floor((diffTime / 1000) % 60)
+
+    if (remainingDays <= 0 && remainingHours <= 0 && remainingMinutes <= 0 && remainingSeconds <= 0) {
+      return <span className="overdue">期限切れ</span>
+    } else {
+      return `${formattedDate}, 残り日時：${remainingDays}日${remainingHours}時間${remainingMinutes}分${remainingSeconds}秒`
+    }
+  }
+
   return (
     <div>
       <Header />
@@ -105,7 +124,12 @@ export const Home = () => {
                 <option value="done">完了</option>
               </select>
             </div>
-            <Tasks tasks={tasks} selectListId={selectListId} isDoneDisplay={isDoneDisplay} />
+            <Tasks
+              tasks={tasks}
+              selectListId={selectListId}
+              isDoneDisplay={isDoneDisplay}
+              getRemainingTime={getRemainingTime}
+            />
           </div>
         </div>
       </main>
@@ -115,44 +139,25 @@ export const Home = () => {
 
 // 表示するタスク
 const Tasks = (props) => {
-  const { tasks, selectListId, isDoneDisplay } = props
+  const { tasks, selectListId, isDoneDisplay, getRemainingTime } = props
   if (tasks === null) return <></>
 
-  if (isDoneDisplay === 'done') {
-    return (
-      <ul>
-        {tasks
-          .filter((task) => {
-            return task.done === true
-          })
-          .map((task, key) => (
-            <li key={key} className="task-item">
-              <Link to={`/lists/${selectListId}/tasks/${task.id}`} className="task-item-link">
-                {task.title}
-                <br />
-                {task.done ? '完了' : '未完了'}
-              </Link>
-            </li>
-          ))}
-      </ul>
-    )
-  }
-
+  const filteredTasks = tasks.filter((task) => {
+    return isDoneDisplay === 'done' ? task.done : !task.done
+  })
   return (
     <ul>
-      {tasks
-        .filter((task) => {
-          return task.done === false
-        })
-        .map((task, key) => (
+      {filteredTasks.map((task, key) => {
+        return (
           <li key={key} className="task-item">
             <Link to={`/lists/${selectListId}/tasks/${task.id}`} className="task-item-link">
               {task.title}
               <br />
-              {task.done ? '完了' : '未完了'}
+              {task.done ? '完了' : '未完了'}, 期限：{getRemainingTime(task.limit)}
             </Link>
           </li>
-        ))}
+        )
+      })}
     </ul>
   )
 }
