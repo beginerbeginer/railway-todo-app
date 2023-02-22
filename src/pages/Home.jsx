@@ -67,7 +67,7 @@ export const Home = () => {
       })
   }
 
-  const handleKeyDown = (event) => {
+  const handleKeyDown = async (event) => {
     const currentIndex = lists.findIndex((list) => list.id === selectListId)
     switch (event.key) {
       case 'Enter': {
@@ -79,36 +79,32 @@ export const Home = () => {
         const previousIndex = (currentIndex - 1 + lists.length) % lists.length
         const previousList = lists[previousIndex]
         setSelectListId(previousList.id)
-        axios
-          .get(`${URL}/lists/${previousList.id}/tasks`, {
+        try {
+          const res = await axios.get(`${URL}/lists/${previousList.id}/tasks`, {
             headers: {
               authorization: `Bearer ${cookies.token}`,
             },
           })
-          .then((res) => {
-            setTasks(res.data.tasks)
-          })
-          .catch((err) => {
-            setErrorMessage(`タスクの取得に失敗しました。${err}`)
-          })
+          setTasks(res.data.tasks)
+        } catch (err) {
+          setErrorMessage(`タスクの取得に失敗しました。${err}`)
+        }
         break
       }
       case 'ArrowRight': {
         const nextIndex = (currentIndex + 1) % lists.length
         const nextList = lists[nextIndex]
         setSelectListId(nextList.id)
-        axios
-          .get(`${URL}/lists/${nextList.id}/tasks`, {
+        try {
+          const res = await axios.get(`${URL}/lists/${nextList.id}/tasks`, {
             headers: {
               authorization: `Bearer ${cookies.token}`,
             },
           })
-          .then((res) => {
-            setTasks(res.data.tasks)
-          })
-          .catch((err) => {
-            setErrorMessage(`タスクの取得に失敗しました。${err}`)
-          })
+          setTasks(res.data.tasks)
+        } catch (err) {
+          setErrorMessage(`タスクの取得に失敗しました。${err}`)
+        }
         break
       }
       default:
