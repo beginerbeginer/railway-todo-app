@@ -13,10 +13,20 @@
 
   @include tablet {
     height: 60px;
+
+    h1 {
+      font-size: 2em;
+      margin: auto;
+    }
   }
 
   @include smartphone {
-    height: 50px;
+    height: 55px;
+
+    h1 {
+      font-size: 1.5em;
+      margin: auto;
+    }
   }
 
   .sign-out-button {

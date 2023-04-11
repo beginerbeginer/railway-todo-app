@@ -14,7 +14,8 @@
 
   // タブレットに対応
   @media (max-width: 768px) {
-    width: 90%;
+    width: 80%;
+    font-size: 0.9em;
   }
 
   // スマートフォンに対応
@@ -36,12 +37,20 @@
 
   // タブレットに対応
   @media (max-width: 768px) {
-    font-size: 14px;
+    width: 100%;
+    font-size: 15px;
+    font-weight: bold;
+    position: relative;
+    top: 50px;
   }
 
   // スマートフォンに対応
   @media (max-width: 320px) {
-    font-size: 12px;
+    width: 100%;
+    font-size: 20px;
+    font-weight: bold;
+    position: relative;
+    top: 30px;
   }
 }
 
@@ -50,6 +59,7 @@
 
   // スマートフォンに対応
   @media (max-width: 320px) {
-    font-size: 12px;
+    font-size: 15px;
+    font-weight: bold;
   }
 }
