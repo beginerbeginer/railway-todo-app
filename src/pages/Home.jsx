@@ -67,7 +67,7 @@ export const Home = () => {
       })
   }
 
-  const handleKeyDown = async (event) => {
+  const handleListNavigation = async (event) => {
     const currentIndex = lists.findIndex((list) => list.id === selectListId)
     switch (event.key) {
       case 'Enter': {
@@ -152,7 +152,7 @@ export const Home = () => {
                   key={key}
                   className={`list-tab-item ${isActive ? 'active' : ''}`}
                   onClick={() => handleSelectList(list.id)}
-                  onKeyDown={handleKeyDown}
+                  onKeyDown={handleListNavigation}
                   tabIndex={0}
                   id={list.id}
                   role="button"
@@ -198,7 +198,7 @@ const Tasks = (props) => {
     return isDoneDisplay === 'done' ? task.done : !task.done
   })
 
-  const handleArrowKeys = (event) => {
+  const handleTaskNavigation = (event) => {
     const taskIds = filteredTasks.map((task) => task.id)
     const currentIndex = taskIds.indexOf(focusedTaskId)
 
@@ -228,7 +228,7 @@ const Tasks = (props) => {
   }
 
   return (
-    <ul tabIndex={0} onKeyDown={handleArrowKeys}>
+    <ul tabIndex={0} onKeyDown={handleTaskNavigation}>
       {filteredTasks.map((task, key) => {
         return (
           <li
