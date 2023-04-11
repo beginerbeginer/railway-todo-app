@@ -67,6 +67,7 @@ export const Home = () => {
       })
   }
 
+  // a11y:手の不自由なユーザーがキーボード操作でリストの移動と選択ができるようにする処理
   const handleListNavigation = async (event) => {
     const currentIndex = lists.findIndex((list) => list.id === selectListId)
     switch (event.key) {
@@ -198,6 +199,7 @@ const Tasks = (props) => {
     return isDoneDisplay === 'done' ? task.done : !task.done
   })
 
+  // a11y:手の不自由なユーザーがキーボード操作でタスクの移動と選択ができるようにする処理
   const handleTaskNavigation = (event) => {
     const taskIds = filteredTasks.map((task) => task.id)
     const currentIndex = taskIds.indexOf(focusedTaskId)
