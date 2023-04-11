@@ -1,10 +1,19 @@
 @charset "utf-8";
 @import '../scss/common';
 @import '../scss/variable';
+@import '../scss/responsive';
 
 .signin {
   width: 500px;
   margin: 0 auto;
+
+  @media (max-width: 768px) {
+    width: 80%;
+  }
+
+  @media (max-width: 320px) {
+    width: 90%;
+  }
 }
 
 .signin-form {
@@ -24,7 +33,26 @@
 .signin-button {
   background-color: $darkBlue;
   color: $white;
+  position: relative;
+  top: 20px;
   @include large-button;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    font-size: 15px;
+    font-weight: bold;
+  }
+
+  @media (max-width: 320px) {
+    width: 100%;
+    font-size: 15px;
+    font-weight: bold;
+  }
+}
+
+.signup-link {
+  position: relative;
+  top: 40px;
 }
 
 .error-message {

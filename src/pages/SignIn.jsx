@@ -52,7 +52,9 @@ export const SignIn = () => {
             サインイン
           </button>
         </form>
-        <Link to={SIGNUP.PATH}>新規作成</Link>
+        <Link to={SIGNUP.PATH} className="signup-link">
+          新規作成
+        </Link>
       </main>
     </div>
   )
