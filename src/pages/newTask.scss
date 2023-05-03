@@ -4,26 +4,63 @@
 
 .new-task {
   width: 1000px;
-  margin: 0 auto;
+  margin: 50px auto;
+
+  @media (max-width: 768px) {
+    width: 90%;
+  }
+
+  @media (max-width: 320px) {
+    width: 90%;
+  }
 
   &-form {
     color: $gray;
+  }
 
-    &-select-list,
-    &-title,
-    &-detail {
-      @include middle-form;
+  &-select-list,
+  &-title,
+  &-detail {
+    @include middle-form;
+
+    @media (max-width: 768px) {
+      width: 100%;
+      font-size: 16px;
     }
 
-    &-detail {
-      height: 200px;
+    @media (max-width: 320px) {
+      width: 100%;
+      font-size: 14px;
+    }
+  }
+
+  &-detail {
+    height: 200px;
+
+    @media (max-width: 768px) {
+      height: 150px;
+    }
+
+    @media (max-width: 320px) {
+      height: 100px;
     }
   }
 
   &-button {
+    margin-top: 20px;
     background-color: $darkBlue;
     color: $white;
     @include middle-button;
+
+    @media (max-width: 768px) {
+      width: 100%;
+      font-size: 16px;
+    }
+
+    @media (max-width: 320px) {
+      width: 100%;
+      font-size: 14px;
+    }
   }
 }
 
