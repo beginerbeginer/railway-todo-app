@@ -1,0 +1,14 @@
+@charset "utf-8";
+@import '../scss/variable';
+
+@mixin tablet {
+  @media screen and (max-width: $tablet) {
+    @content;
+  }
+}
+
+@mixin smartphone {
+  @media screen and (max-width: $smartphone) {
+    @content;
+  }
+}

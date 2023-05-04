@@ -4,26 +4,67 @@
 
 .edit-task {
   width: 1000px;
-  margin: 0 auto;
+  margin: 50px auto;
+
+  @media (max-width: 768px) {
+    width: 90%;
+  }
+
+  @media (max-width: 320px) {
+    width: 90%;
+  }
 
   &-form {
     color: #555555;
-    &-title,
-    &-detail {
-      @include middle-form;
+  }
+
+  &-title,
+  &-detail {
+    @include middle-form;
+
+    @media (max-width: 768px) {
+      width: 100%;
+      font-size: 16px;
     }
 
-    .delete-task-button {
-      color: $red;
-      border: solid 1px $red;
-      margin: 25px 5px;
-      @include middle-button;
+    @media (max-width: 320px) {
+      width: 100%;
+      font-size: 14px;
+    }
+  }
+
+  .delete-task-button {
+    color: $red;
+    border: solid 1px $red;
+    margin: 25px 5px;
+    @include middle-button;
+
+    @media (max-width: 768px) {
+      width: 45%;
+      font-size: 16px;
+      margin: 25px 25px;
     }
 
-    .edit-task-button {
-      background-color: $darkBlue;
-      color: $white;
-      @include middle-button;
+    @media (max-width: 320px) {
+      width: 45%;
+      font-size: 14px;
+      margin: 25px 12.5px;
+    }
+  }
+
+  .edit-task-button {
+    background-color: $darkBlue;
+    color: $white;
+    @include middle-button;
+
+    @media (max-width: 768px) {
+      width: 45%;
+      font-size: 16px;
+    }
+
+    @media (max-width: 320px) {
+      width: 45%;
+      font-size: 14px;
     }
   }
 }

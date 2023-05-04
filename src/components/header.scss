@@ -1,6 +1,7 @@
 @charset "utf-8";
 @import '../scss/common';
 @import '../scss/variable';
+@import '../scss/responsive';
 
 .header {
   width: 100%;
@@ -9,6 +10,24 @@
   color: $white;
   display: flex;
   justify-content: space-between;
+
+  @include tablet {
+    height: 60px;
+
+    h1 {
+      font-size: 2em;
+      margin: auto;
+    }
+  }
+
+  @include smartphone {
+    height: 55px;
+
+    h1 {
+      font-size: 1.5em;
+      margin: auto;
+    }
+  }
 
   .sign-out-button {
     color: $white;

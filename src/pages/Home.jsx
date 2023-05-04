@@ -6,6 +6,8 @@ import dayjs from 'dayjs'
 import timezone from 'dayjs/plugin/timezone'
 import { Header } from '../components/Header'
 import { URL, LIST, TASK } from '../const'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import '../fontawesome'
 import './home.scss'
 dayjs.extend(timezone)
 
@@ -123,8 +125,12 @@ export const Home = () => {
 
     if (remainingDays <= 0 && remainingHours <= 0 && remainingMinutes <= 0 && remainingSeconds <= 0) {
       return <span className="overdue">期限切れ</span>
+    } else if (window.innerWidth <= 320) {
+      return `残り：${remainingDays}日`
+    } else if (window.innerWidth <= 768) {
+      return `期限：${formattedDate}, 残り：${remainingDays}日`
     } else {
-      return `${formattedDate}, 残り日時：${remainingDays}日${remainingHours}時間${remainingMinutes}分${remainingSeconds}秒`
+      return `期限：${formattedDate}, 残り日時：${remainingDays}日${remainingHours}時間${remainingMinutes}分${remainingSeconds}秒`
     }
   }
 
@@ -138,10 +144,16 @@ export const Home = () => {
             <h2>リスト一覧</h2>
             <div className="list-menu">
               <p>
-                <Link to={LIST.NEW_PATH}>リスト新規作成</Link>
+                <Link to={LIST.NEW_PATH}>
+                  <FontAwesomeIcon className="new-list-icon" icon="plus-square" />
+                  <span className="new-list-text">リスト新規作成</span>
+                </Link>
               </p>
               <p>
-                <Link to={`/lists/${selectListId}/edit`}>選択中のリストを編集</Link>
+                <Link to={`/lists/${selectListId}/edit`}>
+                  <FontAwesomeIcon className="edit-list-icon" icon="edit" />
+                  <span className="edit-list-text">選択中のリストを編集</span>
+                </Link>
               </p>
             </div>
           </div>
@@ -167,7 +179,10 @@ export const Home = () => {
           <div className="tasks">
             <div className="tasks-header">
               <h2>タスク一覧</h2>
-              <Link to={TASK.NEW_PATH}>タスク新規作成</Link>
+              <Link to={TASK.NEW_PATH}>
+                <FontAwesomeIcon className="new-task-icon" icon="plus-square" />
+                <span className="new-task-text">タスク新規作成</span>
+              </Link>
             </div>
             <div className="display-select-wrapper">
               <select onChange={handleIsDoneDisplayChange} className="display-select">
@@ -243,7 +258,7 @@ const Tasks = (props) => {
             <Link to={`/lists/${selectListId}/tasks/${task.id}`} className="task-item-link" id={`task-link-${task.id}`}>
               {task.title}
               <br />
-              {task.done ? '完了' : '未完了'}, 期限：{getRemainingTime(task.limit)}
+              {task.done ? '完了' : '未完了'}, {getRemainingTime(task.limit)}
             </Link>
           </li>
         )

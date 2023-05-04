@@ -1,6 +1,7 @@
 @charset "utf-8";
 @import '../scss/common';
 @import '../scss/variable';
+@import '../scss/responsive';
 
 .signup {
   width: 500px;
@@ -9,6 +10,17 @@
   &-form {
     margin: 25px 0;
     color: $gray;
+  }
+
+  // タブレットに対応
+  @media (max-width: 768px) {
+    width: 80%;
+    font-size: 0.9em;
+  }
+
+  // スマートフォンに対応
+  @media (max-width: 320px) {
+    width: 90%;
   }
 }
 
@@ -22,8 +34,32 @@
   background-color: $darkBlue;
   color: $white;
   @include large-button;
+
+  // タブレットに対応
+  @media (max-width: 768px) {
+    width: 100%;
+    font-size: 15px;
+    font-weight: bold;
+    position: relative;
+    top: 50px;
+  }
+
+  // スマートフォンに対応
+  @media (max-width: 320px) {
+    width: 100%;
+    font-size: 20px;
+    font-weight: bold;
+    position: relative;
+    top: 30px;
+  }
 }
 
 .error-message {
   color: $red;
+
+  // スマートフォンに対応
+  @media (max-width: 320px) {
+    font-size: 15px;
+    font-weight: bold;
+  }
 }

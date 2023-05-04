@@ -3,20 +3,49 @@
 @import '../scss/variable';
 
 .new-list {
+  margin: 50px auto;
+  list-style: none;
   width: 1000px;
-  margin: 0 auto;
+
+  @media (max-width: 768px) {
+    width: 90%;
+  }
+
+  @media (max-width: 320px) {
+    width: 90%;
+  }
 
   &-form {
     color: $gray;
+  }
 
-    &-title {
-      @include middle-form;
+  &-title {
+    @include input-field;
+
+    @media (max-width: 768px) {
+      width: 100%;
+      font-size: 16px;
     }
 
-    &-button {
-      background-color: $darkBlue;
-      color: $white;
-      @include middle-button;
+    @media (max-width: 320px) {
+      width: 100%;
+      font-size: 14px;
+    }
+  }
+
+  &-button {
+    background-color: $darkBlue;
+    color: $white;
+    @include middle-button;
+
+    @media (max-width: 768px) {
+      width: 100%;
+      font-size: 16px;
+    }
+
+    @media (max-width: 320px) {
+      width: 100%;
+      font-size: 14px;
     }
   }
 }
