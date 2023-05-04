@@ -3,9 +3,9 @@ import { useCookies } from 'react-cookie'
 import axios from 'axios'
 import { URL, HOME } from '../const'
 import { Header } from '../components/Header'
-import './newTask.scss'
 import { useNavigate } from 'react-router-dom'
 import { getFormattedDeadLine } from '../util'
+import '../scss/newTask.scss'
 
 export const NewTask = () => {
   const [selectListId, setSelectListId] = useState()

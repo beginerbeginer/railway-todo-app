@@ -4,7 +4,7 @@ import { useCookies } from 'react-cookie'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Header } from '../components/Header'
 import { URL, HOME } from '../const'
-import './editList.scss'
+import '../scss/editList.scss'
 
 export const EditList = () => {
   const navigation = useNavigate()
