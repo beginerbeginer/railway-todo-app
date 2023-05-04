@@ -53,20 +53,17 @@ export const Home = () => {
     }
   }, [cookies.token, lists])
 
-  const handleSelectList = (id) => {
-    setSelectListId(id)
-    axios
-      .get(`${URL}/lists/${id}/tasks`, {
+  const fetchTasks = async (listId) => {
+    try {
+      const res = await axios.get(`${URL}/lists/${listId}/tasks`, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
         },
       })
-      .then((res) => {
-        setTasks(res.data.tasks)
-      })
-      .catch((err) => {
-        setErrorMessage(`タスクの取得に失敗しました。${err}`)
-      })
+      setTasks(res.data.tasks)
+    } catch (err) {
+      setErrorMessage(`タスクの取得に失敗しました。${err}`)
+    }
   }
 
   // a11y:手の不自由なユーザーがキーボード操作でリストの移動と選択ができるようにする処理
@@ -75,39 +72,22 @@ export const Home = () => {
     switch (event.key) {
       case 'Enter': {
         const id = event.target.id
-        handleSelectList(id)
+        setSelectListId(id)
+        await fetchTasks(id)
         break
       }
       case 'ArrowLeft': {
         const previousIndex = (currentIndex - 1 + lists.length) % lists.length
         const previousList = lists[previousIndex]
         setSelectListId(previousList.id)
-        try {
-          const res = await axios.get(`${URL}/lists/${previousList.id}/tasks`, {
-            headers: {
-              authorization: `Bearer ${cookies.token}`,
-            },
-          })
-          setTasks(res.data.tasks)
-        } catch (err) {
-          setErrorMessage(`タスクの取得に失敗しました。${err}`)
-        }
+        await fetchTasks(previousList.id)
         break
       }
       case 'ArrowRight': {
         const nextIndex = (currentIndex + 1) % lists.length
         const nextList = lists[nextIndex]
         setSelectListId(nextList.id)
-        try {
-          const res = await axios.get(`${URL}/lists/${nextList.id}/tasks`, {
-            headers: {
-              authorization: `Bearer ${cookies.token}`,
-            },
-          })
-          setTasks(res.data.tasks)
-        } catch (err) {
-          setErrorMessage(`タスクの取得に失敗しました。${err}`)
-        }
+        await fetchTasks(nextList.id)
         break
       }
       default:
@@ -164,7 +144,7 @@ export const Home = () => {
                 <li
                   key={key}
                   className={`list-tab-item ${isActive ? 'active' : ''}`}
-                  onClick={() => handleSelectList(list.id)}
+                  onClick={() => fetchTasks(list.id)}
                   onKeyDown={handleListNavigation}
                   tabIndex={0}
                   id={list.id}
