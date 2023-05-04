@@ -20,37 +20,40 @@ export const Home = () => {
   const [errorMessage, setErrorMessage] = useState('')
   const [cookies] = useCookies()
   const handleIsDoneDisplayChange = (e) => setIsDoneDisplay(e.target.value)
-  useEffect(() => {
-    axios
-      .get(`${URL}/lists`, {
-        headers: {
-          authorization: `Bearer ${cookies.token}`,
-        },
-      })
-      .then((res) => {
-        setLists(res.data)
-      })
-      .catch((err) => {
-        setErrorMessage(`リストの取得に失敗しました。${err}`)
-      })
-  }, [cookies.token])
 
   useEffect(() => {
-    const listId = lists[0]?.id
-    if (typeof listId !== 'undefined') {
-      setSelectListId(listId)
-      axios
-        .get(`${URL}/lists/${listId}/tasks`, {
+    const getLists = async () => {
+      try {
+        const res = await axios.get(`${URL}/lists`, {
           headers: {
             authorization: `Bearer ${cookies.token}`,
           },
         })
-        .then((res) => {
-          setTasks(res.data.tasks)
+        setLists(res.data)
+      } catch (err) {
+        setErrorMessage(`リストの取得に失敗しました。${err}`)
+      }
+    }
+    getLists()
+  }, [cookies.token])
+
+  useEffect(() => {
+    const getTasks = async (listId) => {
+      try {
+        const res = await axios.get(`${URL}/lists/${listId}/tasks`, {
+          headers: {
+            authorization: `Bearer ${cookies.token}`,
+          },
         })
-        .catch((err) => {
-          setErrorMessage(`タスクの取得に失敗しました。${err}`)
-        })
+        setTasks(res.data.tasks)
+      } catch (err) {
+        setErrorMessage(`タスクの取得に失敗しました。${err}`)
+      }
+    }
+    const listId = lists[0]?.id
+    if (typeof listId !== 'undefined') {
+      setSelectListId(listId)
+      getTasks(listId)
     }
   }, [cookies.token, lists])
 
