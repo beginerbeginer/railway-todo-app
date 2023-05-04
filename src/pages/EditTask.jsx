@@ -6,7 +6,7 @@ import { URL, HOME } from '../const'
 import { useNavigate, useParams } from 'react-router-dom'
 import dayjs from 'dayjs'
 import { getFormattedDeadLine } from '../util'
-import './editTask.scss'
+import '../scss/editTask.scss'
 
 export const EditTask = () => {
   const navigation = useNavigate()

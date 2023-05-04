@@ -6,7 +6,7 @@ import { Navigate, useNavigate } from 'react-router-dom'
 import { signIn } from '../authSlice'
 import { Header } from '../components/Header'
 import { URL, HOME } from '../const'
-import './signUp.scss'
+import '../scss/signUp.scss'
 
 export const SignUp = () => {
   const navigation = useNavigate()

@@ -8,7 +8,7 @@ import { Header } from '../components/Header'
 import { URL, LIST, TASK } from '../const'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import '../fontawesome'
-import './home.scss'
+import '../scss/home.scss'
 dayjs.extend(timezone)
 
 export const Home = () => {

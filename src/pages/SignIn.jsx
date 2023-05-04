@@ -3,10 +3,10 @@ import axios from 'axios'
 import { useCookies } from 'react-cookie'
 import { useNavigate, Link, Navigate } from 'react-router-dom'
 import { Header } from '../components/Header'
-import './signin.scss'
 import { useDispatch, useSelector } from 'react-redux'
 import { signIn } from '../authSlice'
 import { URL, HOME, SIGNUP } from '../const'
+import '../scss/signin.scss'
 
 export const SignIn = () => {
   const auth = useSelector((state) => state.auth.isSignIn)
