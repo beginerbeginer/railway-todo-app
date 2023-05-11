@@ -1,17 +1,16 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useCookies } from 'react-cookie'
 import axios from 'axios'
 import { Header } from '../components/Header'
 import { useNavigate } from 'react-router-dom'
 import { URL, HOME } from '../const'
+import { useListForm } from '../components/useListForm'
 import '../scss/newList.scss'
 
 export const NewList = () => {
   const [cookies] = useCookies()
   const navigation = useNavigate()
-  const [title, setTitle] = useState('')
-  const [errorMessage, setErrorMessage] = useState('')
-  const handleTitleChange = (e) => setTitle(e.target.value)
+  const { title, errorMessage, handleTitleChange, setErrorMessage } = useListForm()
   const onCreateList = () => {
     const data = {
       title: title,
@@ -40,7 +39,7 @@ export const NewList = () => {
         <form className="new-list-form">
           <label>タイトル</label>
           <br />
-          <input type="text" onChange={handleTitleChange} className="new-list-title" />
+          <input type="text" onChange={handleTitleChange} className="new-list-title" value={title} />
           <br />
           <button type="button" onClick={onCreateList} className="new-list-button">
             作成

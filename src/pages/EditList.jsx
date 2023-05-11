@@ -1,18 +1,17 @@
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useCookies } from 'react-cookie'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Header } from '../components/Header'
 import { URL, HOME } from '../const'
+import { useListForm } from '../components/useListForm'
+import axios from 'axios'
 import '../scss/editList.scss'
 
 export const EditList = () => {
   const navigation = useNavigate()
   const { listId } = useParams()
-  const [title, setTitle] = useState('')
-  const [errorMessage, setErrorMessage] = useState('')
+  const { title, setTitle, errorMessage, handleTitleChange, setErrorMessage } = useListForm()
   const [cookies] = useCookies()
-  const handleTitleChange = (e) => setTitle(e.target.value)
   const onUpdateList = () => {
     const data = {
       title: title,
@@ -61,7 +60,7 @@ export const EditList = () => {
       .catch((err) => {
         setErrorMessage(`リスト情報の取得に失敗しました。${err}`)
       })
-  }, [cookies.token, listId])
+  }, [cookies.token, listId, setTitle, setErrorMessage])
 
   return (
     <div>
