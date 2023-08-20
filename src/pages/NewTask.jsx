@@ -5,27 +5,24 @@ import { URL, HOME } from '../const'
 import { Header } from '../components/Header'
 import { useNavigate } from 'react-router-dom'
 import { getFormattedDeadLine } from '../util'
+import { useTaskForm } from '../components/useTaskForm'
 import '../scss/newTask.scss'
 
 export const NewTask = () => {
   const [selectListId, setSelectListId] = useState()
   const [lists, setLists] = useState([])
-  const [title, setTitle] = useState('')
-  const [detail, setDetail] = useState('')
-  const [deadLine, setDeadLine] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   const [cookies] = useCookies()
   const navigation = useNavigate()
-  const handleTitleChange = (e) => setTitle(e.target.value)
-  const handleDetailChange = (e) => setDetail(e.target.value)
+  const taskForm = useTaskForm({})
   const handleSelectList = (id) => setSelectListId(id)
-  const handleDeadLineChange = (e) => setDeadLine(e.target.value)
+
   const onCreateTask = () => {
     const data = {
-      title: title,
-      detail: detail,
+      title: taskForm.title,
+      detail: taskForm.detail,
       done: false,
-      limit: getFormattedDeadLine(deadLine),
+      limit: getFormattedDeadLine(taskForm.deadLine),
     }
 
     axios
@@ -77,15 +74,15 @@ export const NewTask = () => {
           <br />
           <label>タイトル</label>
           <br />
-          <input type="text" onChange={handleTitleChange} className="new-task-title" />
+          <input type="text" onChange={taskForm.handleTitleChange} className="new-task-title" />
           <br />
           <label>詳細</label>
           <br />
-          <textarea type="text" onChange={handleDetailChange} className="new-task-detail" />
+          <textarea type="text" onChange={taskForm.handleDetailChange} className="new-task-detail" />
           <br />
           <label>期限</label>
           <br />
-          <input type="datetime-local" onChange={handleDeadLineChange} className="new-task-limit" />
+          <input type="datetime-local" onChange={taskForm.handleDeadLineChange} className="new-task-limit" />
           <br />
           <button type="button" className="new-task-button" onClick={onCreateTask}>
             作成

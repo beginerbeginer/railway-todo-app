@@ -6,28 +6,25 @@ import { URL, HOME } from '../const'
 import { useNavigate, useParams } from 'react-router-dom'
 import dayjs from 'dayjs'
 import { getFormattedDeadLine } from '../util'
+import { useTaskForm } from '../components/useTaskForm'
 import '../scss/editTask.scss'
 
 export const EditTask = () => {
   const navigation = useNavigate()
   const { listId, taskId } = useParams()
   const [cookies] = useCookies()
-  const [title, setTitle] = useState('')
-  const [detail, setDetail] = useState('')
   const [isDone, setIsDone] = useState()
-  const [deadLine, setDeadLine] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
-  const handleTitleChange = (e) => setTitle(e.target.value)
-  const handleDetailChange = (e) => setDetail(e.target.value)
+  const taskForm = useTaskForm({})
   const handleIsDoneChange = (e) => setIsDone(e.target.value === 'done')
-  const handledeadLineChange = (e) => setDeadLine(e.target.value)
+
   const onUpdateTask = () => {
     console.log(isDone)
     const data = {
-      title: title,
-      detail: detail,
+      title: taskForm.title,
+      detail: taskForm.detail,
       done: isDone,
-      limit: getFormattedDeadLine(deadLine),
+      limit: getFormattedDeadLine(taskForm.deadLine),
     }
 
     axios
@@ -69,15 +66,15 @@ export const EditTask = () => {
       })
       .then((res) => {
         const task = res.data
-        setTitle(task.title)
-        setDetail(task.detail)
+        taskForm.setTitle(task.title)
+        taskForm.setDetail(task.detail)
         setIsDone(task.done)
-        setDeadLine(dayjs(task.limit).format('YYYY-MM-DDTHH:mm'))
+        taskForm.setDeadLine(dayjs(task.limit).format('YYYY-MM-DDTHH:mm'))
       })
       .catch((err) => {
         setErrorMessage(`タスク情報の取得に失敗しました。${err}`)
       })
-  }, [cookies.token, listId, taskId])
+  }, [cookies.token, listId, taskId, taskForm])
 
   return (
     <div>
@@ -88,19 +85,24 @@ export const EditTask = () => {
         <form className="edit-task-form">
           <label>タイトル</label>
           <br />
-          <input type="text" onChange={handleTitleChange} className="edit-task-title" value={title} />
+          <input type="text" onChange={taskForm.handleTitleChange} className="edit-task-title" value={taskForm.title} />
           <br />
           <label>詳細</label>
           <br />
-          <textarea type="text" onChange={handleDetailChange} className="edit-task-detail" value={detail} />
+          <textarea
+            type="text"
+            onChange={taskForm.handleDetailChange}
+            className="edit-task-detail"
+            value={taskForm.detail}
+          />
           <br />
           <label>期限</label>
           <br />
           <input
             type="datetime-local"
-            onChange={handledeadLineChange}
+            onChange={taskForm.handledeadLineChange}
             className="edit-task-due-date"
-            value={deadLine}
+            value={taskForm.deadLine}
           />
           <br />
           <div>
