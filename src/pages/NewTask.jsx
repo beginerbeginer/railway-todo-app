@@ -20,7 +20,7 @@ export const NewTask = () => {
   const handleDetailChange = (e) => setDetail(e.target.value)
   const handleSelectList = (id) => setSelectListId(id)
   const handleDeadLineChange = (e) => setDeadLine(e.target.value)
-  const onCreateTask = () => {
+  const onCreateTask = async () => {
     const data = {
       title: title,
       detail: detail,
@@ -28,34 +28,34 @@ export const NewTask = () => {
       limit: getFormattedDeadLine(deadLine),
     }
 
-    axios
-      .post(`${URL}/lists/${selectListId}/tasks`, data, {
+    try {
+      await axios.post(`${URL}/lists/${selectListId}/tasks`, data, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
         },
       })
-      .then(() => {
-        navigation(HOME.PATH)
-      })
-      .catch((err) => {
-        setErrorMessage(`タスクの作成に失敗しました。${err}`)
-      })
+      navigation(HOME.PATH)
+    } catch (err) {
+      setErrorMessage(`タスクの作成に失敗しました。${err}`)
+    }
   }
 
   useEffect(() => {
-    axios
-      .get(`${URL}/lists`, {
-        headers: {
-          authorization: `Bearer ${cookies.token}`,
-        },
-      })
-      .then((res) => {
+    const fetchLists = async () => {
+      try {
+        const res = await axios.get(`${URL}/lists`, {
+          headers: {
+            authorization: `Bearer ${cookies.token}`,
+          },
+        })
         setLists(res.data)
         setSelectListId(res.data[0]?.id)
-      })
-      .catch((err) => {
+      } catch (err) {
         setErrorMessage(`リストの取得に失敗しました。${err}`)
-      })
+      }
+    }
+
+    fetchLists()
   }, [cookies.token])
 
   return (

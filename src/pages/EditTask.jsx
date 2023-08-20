@@ -21,7 +21,8 @@ export const EditTask = () => {
   const handleDetailChange = (e) => setDetail(e.target.value)
   const handleIsDoneChange = (e) => setIsDone(e.target.value === 'done')
   const handledeadLineChange = (e) => setDeadLine(e.target.value)
-  const onUpdateTask = () => {
+
+  const onUpdateTask = async () => {
     console.log(isDone)
     const data = {
       title: title,
@@ -30,53 +31,51 @@ export const EditTask = () => {
       limit: getFormattedDeadLine(deadLine),
     }
 
-    axios
-      .put(`${URL}/lists/${listId}/tasks/${taskId}`, data, {
+    try {
+      const res = await axios.put(`${URL}/lists/${listId}/tasks/${taskId}`, data, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
         },
       })
-      .then((res) => {
-        console.log(res.data)
-        navigation(HOME.PATH)
-      })
-      .catch((err) => {
-        setErrorMessage(`更新に失敗しました。${err}`)
-      })
+      console.log(res.data)
+      navigation(HOME.PATH)
+    } catch (err) {
+      setErrorMessage(`更新に失敗しました。${err}`)
+    }
   }
 
-  const onDeleteTask = () => {
-    axios
-      .delete(`${URL}/lists/${listId}/tasks/${taskId}`, {
+  const onDeleteTask = async () => {
+    try {
+      await axios.delete(`${URL}/lists/${listId}/tasks/${taskId}`, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
         },
       })
-      .then(() => {
-        navigation(HOME.PATH)
-      })
-      .catch((err) => {
-        setErrorMessage(`削除に失敗しました。${err}`)
-      })
+      navigation(HOME.PATH)
+    } catch (err) {
+      setErrorMessage(`削除に失敗しました。${err}`)
+    }
   }
 
   useEffect(() => {
-    axios
-      .get(`${URL}/lists/${listId}/tasks/${taskId}`, {
-        headers: {
-          authorization: `Bearer ${cookies.token}`,
-        },
-      })
-      .then((res) => {
+    const fetchTaskData = async () => {
+      try {
+        const res = await axios.get(`${URL}/lists/${listId}/tasks/${taskId}`, {
+          headers: {
+            authorization: `Bearer ${cookies.token}`,
+          },
+        })
         const task = res.data
         setTitle(task.title)
         setDetail(task.detail)
         setIsDone(task.done)
         setDeadLine(dayjs(task.limit).format('YYYY-MM-DDTHH:mm'))
-      })
-      .catch((err) => {
+      } catch (err) {
         setErrorMessage(`タスク情報の取得に失敗しました。${err}`)
-      })
+      }
+    }
+
+    fetchTaskData()
   }, [cookies.token, listId, taskId])
 
   return (
