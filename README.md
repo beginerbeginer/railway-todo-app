@@ -5,7 +5,7 @@
 1. Node.js v16以降
 2. Yarn v1
 
-このRailwayに取り組む方はすでにインストールできていると思いますがされていない方はインストールしてください。  
+このRailwayに取り組む方はすでにインストールできていると思いますがされていない方はインストールしてください。
 初期設定は原則HTML/CSS/JavaScript Railway, React.js Railwayと同様となります。
 
 #### railway-todo-appリポジトリのFork
@@ -14,7 +14,7 @@
 #### railway-todo-appリポジトリのClone
 作成したリポジトリを作業するディレクトリにクローンしましょう。
 - Macなら Terminal.app(iTerm2などでも良い)
-- Windowsなら PowerShell(GitBashなどのインストールしたアプリでもう良いです。アプリによってはコマンドが異なることがあります)  
+- Windowsなら PowerShell(GitBashなどのインストールしたアプリでもう良いです。アプリによってはコマンドが異なることがあります)
 で作業するディレクトリを開き、次のコマンドでForkしたReact.js　Railwayのリポジトリをローカルにクローンしてください。
 
 ```powershell
@@ -28,7 +28,7 @@ git clone git@github.com:[GitHubのユーザー名]/railway-todo-app.git
 ```
 
 #### .envファイルの設定
-クローンしたリポジトリには.env.sampleというファイルがあります。それをコピーしたものを.envにファイル名を変更してください。  
+クローンしたリポジトリには.env.sampleというファイルがあります。それをコピーしたものを.envにファイル名を変更してください。
 フォークして最初の状態ではAPIのURLを.envファイルから読み込むようになっています。それを自身の.envに追記してください。
 - API URL: https://railway-react-todo-backend.herokuapp.com
 
@@ -46,4 +46,10 @@ yarn install
 
 ```powershell
 yarn start
+```
+
+#### dockerで起動する場合
+
+```bash
+docker-compose up
 ```
