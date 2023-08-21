@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
+import { useForm } from 'react-hook-form'
 import { useCookies } from 'react-cookie'
 import axios from 'axios'
 import { URL, HOME } from '../const'
@@ -8,35 +9,27 @@ import { getFormattedDeadLine } from '../util'
 import '../scss/newTask.scss'
 
 export const NewTask = () => {
-  const [selectListId, setSelectListId] = useState()
-  const [lists, setLists] = useState([])
-  const [title, setTitle] = useState('')
-  const [detail, setDetail] = useState('')
-  const [deadLine, setDeadLine] = useState('')
-  const [errorMessage, setErrorMessage] = useState('')
+  const { register, handleSubmit, setValue } = useForm()
   const [cookies] = useCookies()
   const navigation = useNavigate()
-  const handleTitleChange = (e) => setTitle(e.target.value)
-  const handleDetailChange = (e) => setDetail(e.target.value)
-  const handleSelectList = (id) => setSelectListId(id)
-  const handleDeadLineChange = (e) => setDeadLine(e.target.value)
-  const onCreateTask = async () => {
-    const data = {
-      title: title,
-      detail: detail,
+  const onCreateTask = async (data) => {
+    const { selectListId, title, detail, deadLine } = data
+    const formattedData = {
+      title,
+      detail,
       done: false,
       limit: getFormattedDeadLine(deadLine),
     }
 
     try {
-      await axios.post(`${URL}/lists/${selectListId}/tasks`, data, {
+      await axios.post(`${URL}/lists/${selectListId}/tasks`, formattedData, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
         },
       })
       navigation(HOME.PATH)
     } catch (err) {
-      setErrorMessage(`タスクの作成に失敗しました。${err}`)
+      setValue('errorMessage', `タスクの作成に失敗しました。${err}`)
     }
   }
 
@@ -48,27 +41,27 @@ export const NewTask = () => {
             authorization: `Bearer ${cookies.token}`,
           },
         })
-        setLists(res.data)
-        setSelectListId(res.data[0]?.id)
+        setValue('lists', res.data)
+        setValue('selectListId', res.data[0]?.id)
       } catch (err) {
-        setErrorMessage(`リストの取得に失敗しました。${err}`)
+        setValue('errorMessage', `リストの取得に失敗しました。${err}`)
       }
     }
 
     fetchLists()
-  }, [cookies.token])
+  }, [cookies.token, setValue])
 
   return (
     <div>
       <Header />
       <main className="new-task">
         <h2>タスク新規作成</h2>
-        <p className="error-message">{errorMessage}</p>
-        <form className="new-task-form">
+        <p className="error-message">{register('errorMessage').value}</p>
+        <form className="new-task-form" onSubmit={handleSubmit(onCreateTask)}>
           <label>リスト</label>
           <br />
-          <select onChange={(e) => handleSelectList(e.target.value)} className="new-task-select-list">
-            {lists.map((list, key) => (
+          <select {...register('selectListId')} className="new-task-select-list">
+            {(register('lists').value || []).map((list, key) => (
               <option key={key} className="list-item" value={list.id}>
                 {list.title}
               </option>
@@ -77,17 +70,17 @@ export const NewTask = () => {
           <br />
           <label>タイトル</label>
           <br />
-          <input type="text" onChange={handleTitleChange} className="new-task-title" />
+          <input type="text" {...register('title')} className="new-task-title" />
           <br />
           <label>詳細</label>
           <br />
-          <textarea type="text" onChange={handleDetailChange} className="new-task-detail" />
+          <textarea type="text" {...register('detail')} className="new-task-detail" />
           <br />
           <label>期限</label>
           <br />
-          <input type="datetime-local" onChange={handleDeadLineChange} className="new-task-limit" />
+          <input type="datetime-local" {...register('deadLine')} className="new-task-limit" />
           <br />
-          <button type="button" className="new-task-button" onClick={onCreateTask}>
+          <button type="submit" className="new-task-button">
             作成
           </button>
         </form>
