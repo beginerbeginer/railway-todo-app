@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useCookies } from 'react-cookie'
 import axios from 'axios'
@@ -12,6 +12,9 @@ export const NewTask = () => {
   const { register, handleSubmit, setValue } = useForm()
   const [cookies] = useCookies()
   const navigation = useNavigate()
+
+  // listsの状態とその更新関数を定義
+  const [lists, setLists] = useState([])
   const onCreateTask = async (data) => {
     const { selectListId, title, detail, deadLine } = data
     const formattedData = {
@@ -41,7 +44,8 @@ export const NewTask = () => {
             authorization: `Bearer ${cookies.token}`,
           },
         })
-        setValue('lists', res.data)
+        // APIから取得したデータをlistsの状態にセット
+        setLists(res.data)
         setValue('selectListId', res.data[0]?.id)
       } catch (err) {
         setValue('errorMessage', `リストの取得に失敗しました。${err}`)
@@ -61,7 +65,7 @@ export const NewTask = () => {
           <label>リスト</label>
           <br />
           <select {...register('selectListId')} className="new-task-select-list">
-            {(register('lists').value || []).map((list, key) => (
+            {lists.map((list, key) => (
               <option key={key} className="list-item" value={list.id}>
                 {list.title}
               </option>
