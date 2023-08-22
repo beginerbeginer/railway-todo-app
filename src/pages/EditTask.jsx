@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, FormProvider } from 'react-hook-form'
 import { Header } from '../components/Header'
 import axios from 'axios'
 import { useCookies } from 'react-cookie'
@@ -7,6 +7,11 @@ import { URL, HOME } from '../const'
 import { useNavigate, useParams } from 'react-router-dom'
 import dayjs from 'dayjs'
 import { getFormattedDeadLine } from '../util'
+import { TextInput } from '../components/TaskFormComponents/TextInput'
+import { TextArea } from '../components/TaskFormComponents/TextArea'
+import { SubmitButton } from '../components/ButtonComponents/SubmitButton'
+import { DeleteButton } from '../components/ButtonComponents/DeleteButton'
+import { RadioButton } from '../components/ButtonComponents/RadioButton'
 import '../scss/editTask.scss'
 
 export const EditTask = () => {
@@ -75,32 +80,19 @@ export const EditTask = () => {
       <main className="edit-task">
         <h2>タスク編集</h2>
         <p className="error-message">{watch('errorMessage')}</p>
-        <form className="edit-task-form" onSubmit={handleSubmit(onUpdateTask)}>
-          <label>タイトル</label>
-          <br />
-          <input type="text" {...register('title')} className="edit-task-title" />
-          <br />
-          <label>詳細</label>
-          <br />
-          <textarea type="text" {...register('detail')} className="edit-task-detail" />
-          <br />
-          <label>期限</label>
-          <br />
-          <input type="datetime-local" {...register('deadLine')} className="edit-task-due-date" />
-          <br />
-          <div>
-            <input type="radio" id="todo" name="isDone" value="todo" {...register('isDone')} />
-            未完了
-            <input type="radio" id="done" name="isDone" value="done" {...register('isDone')} />
-            完了
-          </div>
-          <button type="button" className="delete-task-button" onClick={onDeleteTask}>
-            削除
-          </button>
-          <button type="submit" className="edit-task-button">
-            更新
-          </button>
-        </form>
+        <FormProvider register={register} setValue={setValue}>
+          <form className="edit-task-form" onSubmit={handleSubmit(onUpdateTask)}>
+            <TextInput name="title" label="タイトル" className="edit-task-title" />
+            <TextArea name="detail" label="詳細" className="edit-task-detail" />
+            <TextInput name="deadLine" label="期限" className="edit-task-due-date" type="datetime-local" />
+            <div>
+              <RadioButton text="未完了" type="radio" id="todo" name="isDone" value="todo" {...register('isDone')} />
+              <RadioButton text="完了" type="radio" id="done" name="isDone" value="done" {...register('isDone')} />
+            </div>
+            <DeleteButton text="削除" className="delete-task-button" onClick={onDeleteTask} />
+            <SubmitButton text="更新" className="edit-task-button" />
+          </form>
+        </FormProvider>
       </main>
     </div>
   )
