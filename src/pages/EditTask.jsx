@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
+import { useForm, FormProvider } from 'react-hook-form'
 import { Header } from '../components/Header'
 import axios from 'axios'
 import { useCookies } from 'react-cookie'
@@ -6,41 +7,36 @@ import { URL, HOME } from '../const'
 import { useNavigate, useParams } from 'react-router-dom'
 import dayjs from 'dayjs'
 import { getFormattedDeadLine } from '../util'
+import { TextInput } from '../components/TaskFormComponents/TextInput'
+import { TextArea } from '../components/TaskFormComponents/TextArea'
+import { SubmitButton } from '../components/ButtonComponents/SubmitButton'
+import { DeleteButton } from '../components/ButtonComponents/DeleteButton'
+import { RadioButton } from '../components/ButtonComponents/RadioButton'
 import '../scss/editTask.scss'
 
 export const EditTask = () => {
   const navigation = useNavigate()
   const { listId, taskId } = useParams()
   const [cookies] = useCookies()
-  const [title, setTitle] = useState('')
-  const [detail, setDetail] = useState('')
-  const [isDone, setIsDone] = useState()
-  const [deadLine, setDeadLine] = useState('')
-  const [errorMessage, setErrorMessage] = useState('')
-  const handleTitleChange = (e) => setTitle(e.target.value)
-  const handleDetailChange = (e) => setDetail(e.target.value)
-  const handleIsDoneChange = (e) => setIsDone(e.target.value === 'done')
-  const handledeadLineChange = (e) => setDeadLine(e.target.value)
-
-  const onUpdateTask = async () => {
-    console.log(isDone)
-    const data = {
-      title: title,
-      detail: detail,
-      done: isDone,
+  const { register, handleSubmit, setValue, watch } = useForm()
+  const onUpdateTask = async (data) => {
+    const { title, detail, isDone, deadLine } = data
+    const formattedData = {
+      title,
+      detail,
+      done: isDone === 'done',
       limit: getFormattedDeadLine(deadLine),
     }
 
     try {
-      const res = await axios.put(`${URL}/lists/${listId}/tasks/${taskId}`, data, {
+      await axios.put(`${URL}/lists/${listId}/tasks/${taskId}`, formattedData, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
         },
       })
-      console.log(res.data)
       navigation(HOME.PATH)
     } catch (err) {
-      setErrorMessage(`更新に失敗しました。${err}`)
+      setValue('errorMessage', `更新に失敗しました。${err}`)
     }
   }
 
@@ -53,7 +49,7 @@ export const EditTask = () => {
       })
       navigation(HOME.PATH)
     } catch (err) {
-      setErrorMessage(`削除に失敗しました。${err}`)
+      setValue('errorMessage', `削除に失敗しました。${err}`)
     }
   }
 
@@ -66,69 +62,37 @@ export const EditTask = () => {
           },
         })
         const task = res.data
-        setTitle(task.title)
-        setDetail(task.detail)
-        setIsDone(task.done)
-        setDeadLine(dayjs(task.limit).format('YYYY-MM-DDTHH:mm'))
+        setValue('title', task.title)
+        setValue('detail', task.detail)
+        setValue('isDone', task.done ? 'done' : 'todo')
+        setValue('deadLine', dayjs(task.limit).format('YYYY-MM-DDTHH:mm'))
       } catch (err) {
-        setErrorMessage(`タスク情報の取得に失敗しました。${err}`)
+        setValue('errorMessage', `タスク情報の取得に失敗しました。${err}`)
       }
     }
 
     fetchTaskData()
-  }, [cookies.token, listId, taskId])
+  }, [cookies.token, listId, taskId, setValue])
 
   return (
     <div>
       <Header />
       <main className="edit-task">
         <h2>タスク編集</h2>
-        <p className="error-message">{errorMessage}</p>
-        <form className="edit-task-form">
-          <label>タイトル</label>
-          <br />
-          <input type="text" onChange={handleTitleChange} className="edit-task-title" value={title} />
-          <br />
-          <label>詳細</label>
-          <br />
-          <textarea type="text" onChange={handleDetailChange} className="edit-task-detail" value={detail} />
-          <br />
-          <label>期限</label>
-          <br />
-          <input
-            type="datetime-local"
-            onChange={handledeadLineChange}
-            className="edit-task-due-date"
-            value={deadLine}
-          />
-          <br />
-          <div>
-            <input
-              type="radio"
-              id="todo"
-              name="status"
-              value="todo"
-              onChange={handleIsDoneChange}
-              checked={isDone === false ? 'checked' : ''}
-            />
-            未完了
-            <input
-              type="radio"
-              id="done"
-              name="status"
-              value="done"
-              onChange={handleIsDoneChange}
-              checked={isDone === true ? 'checked' : ''}
-            />
-            完了
-          </div>
-          <button type="button" className="delete-task-button" onClick={onDeleteTask}>
-            削除
-          </button>
-          <button type="button" className="edit-task-button" onClick={onUpdateTask}>
-            更新
-          </button>
-        </form>
+        <p className="error-message">{watch('errorMessage')}</p>
+        <FormProvider register={register} setValue={setValue}>
+          <form className="edit-task-form" onSubmit={handleSubmit(onUpdateTask)}>
+            <TextInput name="title" label="タイトル" className="edit-task-title" />
+            <TextArea name="detail" label="詳細" className="edit-task-detail" />
+            <TextInput name="deadLine" label="期限" className="edit-task-due-date" type="datetime-local" />
+            <div>
+              <RadioButton text="未完了" type="radio" id="todo" name="isDone" value="todo" {...register('isDone')} />
+              <RadioButton text="完了" type="radio" id="done" name="isDone" value="done" {...register('isDone')} />
+            </div>
+            <DeleteButton text="削除" className="delete-task-button" onClick={onDeleteTask} />
+            <SubmitButton text="更新" className="edit-task-button" />
+          </form>
+        </FormProvider>
       </main>
     </div>
   )
