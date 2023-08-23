@@ -4,9 +4,9 @@ export const TextArea = ({ name, label, className }) => {
   const { register } = useFormContext()
   return (
     <>
-      <label>{label}</label>
+      <label htmlFor={name}>{label}</label>
       <br />
-      <textarea {...register(name)} className={className} />
+      <textarea id={name} {...register(name)} className={className} />
       <br />
     </>
   )

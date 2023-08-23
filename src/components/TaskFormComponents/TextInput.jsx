@@ -4,9 +4,9 @@ export const TextInput = ({ name, label, className, type = 'text' }) => {
   const { register } = useFormContext()
   return (
     <>
-      <label>{label}</label>
+      <label htmlFor={name}>{label}</label>
       <br />
-      <input type={type} {...register(name)} className={className} />
+      <input type={type} id={name} {...register(name)} className={className} />
       <br />
     </>
   )
