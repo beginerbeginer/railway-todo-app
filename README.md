@@ -36,8 +36,7 @@ git clone git@github.com:[GitHubのユーザー名]/railway-todo-app.git
 
 クローンしたリポジトリには.env.sampleというファイルがあります。それをコピーしたものを.envにファイル名を変更してください。
 フォークして最初の状態ではAPIのURLを.envファイルから読み込むようになっています。それを自身の.envに追記してください。
-
-- API URL: <https://railway-react-todo-backend.herokuapp.com>
+APIのURLはTechTrainサービスにログインし、問題文の中で案内されているものを使用してください。
 
 #### パッケージのインストール
 
