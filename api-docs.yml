@@ -51,52 +51,19 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                  ErrorMessageJP:
-                    type: string
-                  ErrorMessageEN:
-                    type: string
-              example:
-                ErrorCode: 400
-                ErrorMessageJP: 'バリデーションエラー'
-                ErrorMessageEN: 'validation error'
+                $ref: '#/components/schemas/BadRequestError'
         '401':
           description: Unauthorized error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                  ErrorMessageJP:
-                    type: string
-                  ErrorMessageEN:
-                    type: string
-              example:
-                ErrorCode: 403
-                ErrorMessageJP: '認証エラー'
-                ErrorMessageEN: 'You are not authorized user'
+                $ref: '#/components/schemas/UnauthorizedError'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                  ErrorMessageJP:
-                    type: string
-                  ErrorMessageEN:
-                    type: string
-              example:
-                ErrorCode: 500
-                ErrorMessageJP: 'サーバでエラーが発生しました。'
-                ErrorMessageEN: 'Error occurred at server.'
+                $ref: '#/components/schemas/InternalServerError'
   /users:
     post:
       tags:
@@ -139,52 +106,19 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                  ErrorMessageJP:
-                    type: string
-                  ErrorMessageEN:
-                    type: string
-              example:
-                ErrorCode: 400
-                ErrorMessageJP: 'バリデーションエラー'
-                ErrorMessageEN: 'validation error'
+                $ref: '#/components/schemas/BadRequestError'
         '401':
           description: Unauthorized error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                  ErrorMessageJP:
-                    type: string
-                  ErrorMessageEN:
-                    type: string
-              example:
-                ErrorCode: 401
-                ErrorMessageJP: '認証エラー'
-                ErrorMessageEN: 'You are not authorized user'
+                $ref: '#/components/schemas/UnauthorizedError'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                  ErrorMessageJP:
-                    type: string
-                  ErrorMessageEN:
-                    type: string
-              example:
-                ErrorCode: 500
-                ErrorMessageJP: 'サーバでエラーが発生しました。'
-                ErrorMessageEN: 'Error occurred at server.'
+                $ref: '#/components/schemas/InternalServerError'
     get:
       tags:
         - user
@@ -216,52 +150,19 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                  ErrorMessageJP:
-                    type: string
-                  ErrorMessageEN:
-                    type: string
-              example:
-                ErrorCode: 400
-                ErrorMessageJP: 'バリデーションエラー'
-                ErrorMessageEN: 'validation error'
+                $ref: '#/components/schemas/BadRequestError'
         '401':
           description: Unauthorized error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                  ErrorMessageJP:
-                    type: string
-                  ErrorMessageEN:
-                    type: string
-              example:
-                ErrorCode: 401
-                ErrorMessageJP: '認証エラー'
-                ErrorMessageEN: 'You are not authorized user'
+                $ref: '#/components/schemas/UnauthorizedError'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                  ErrorMessageJP:
-                    type: string
-                  ErrorMessageEN:
-                    type: string
-              example:
-                ErrorCode: 500
-                ErrorMessageJP: 'サーバでエラーが発生しました。'
-                ErrorMessageEN: 'Error occurred at server.'
+                $ref: '#/components/schemas/InternalServerError'
     put:
       tags:
         - user
@@ -301,52 +202,19 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                  ErrorMessageJP:
-                    type: string
-                  ErrorMessageEN:
-                    type: string
-              example:
-                ErrorCode: 400
-                ErrorMessageJP: 'バリデーションエラー'
-                ErrorMessageEN: 'validation error'
+                $ref: '#/components/schemas/BadRequestError'
         '401':
           description: Unauthorized error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                  ErrorMessageJP:
-                    type: string
-                  ErrorMessageEN:
-                    type: string
-              example:
-                ErrorCode: 401
-                ErrorMessageJP: '認証エラー'
-                ErrorMessageEN: 'You are not authorized user'
+                $ref: '#/components/schemas/UnauthorizedError'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                  ErrorMessageJP:
-                    type: string
-                  ErrorMessageEN:
-                    type: string
-              example:
-                ErrorCode: 500
-                ErrorMessageJP: 'サーバでエラーが発生しました。'
-                ErrorMessageEN: 'Error occurred at server.'
+                $ref: '#/components/schemas/InternalServerError'
   /lists/{listId}/tasks:
     get:
       tags:
@@ -408,52 +276,19 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                  ErrorMessageJP:
-                    type: string
-                  ErrorMessageEN:
-                    type: string
-              example:
-                ErrorCode: 400
-                ErrorMessageJP: 'バリデーションエラー'
-                ErrorMessageEN: 'validation error'
+                $ref: '#/components/schemas/BadRequestError'
         '401':
           description: Unauthorized error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                  ErrorMessageJP:
-                    type: string
-                  ErrorMessageEN:
-                    type: string
-              example:
-                ErrorCode: 401
-                ErrorMessageJP: '認証エラー'
-                ErrorMessageEN: 'You are not authorized user'
+                $ref: '#/components/schemas/UnauthorizedError'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                  ErrorMessageJP:
-                    type: string
-                  ErrorMessageEN:
-                    type: string
-              example:
-                ErrorCode: 500
-                ErrorMessageJP: 'サーバでエラーが発生しました。'
-                ErrorMessageEN: 'Error occurred at server.'
+                $ref: '#/components/schemas/InternalServerError'
     post:
       tags:
         - task
@@ -500,52 +335,19 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                  ErrorMessageJP:
-                    type: string
-                  ErrorMessageEN:
-                    type: string
-              example:
-                ErrorCode: 400
-                ErrorMessageJP: 'バリデーションエラー'
-                ErrorMessageEN: 'validation error'
+                $ref: '#/components/schemas/BadRequestError'
         '401':
           description: Unauthorized error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                  ErrorMessageJP:
-                    type: string
-                  ErrorMessageEN:
-                    type: string
-              example:
-                ErrorCode: 401
-                ErrorMessageJP: '認証エラー'
-                ErrorMessageEN: 'You are not authorized user'
+                $ref: '#/components/schemas/UnauthorizedError'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                  ErrorMessageJP:
-                    type: string
-                  ErrorMessageEN:
-                    type: string
-              example:
-                ErrorCode: 500
-                ErrorMessageJP: 'サーバでエラーが発生しました。'
-                ErrorMessageEN: 'Error occurred at server.'
+                $ref: '#/components/schemas/InternalServerError'
   /lists/{listId}/tasks/{taskId}:
     get:
       tags:
@@ -597,65 +399,25 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                    example: 400
-                  ErrorMessageJP:
-                    type: string
-                    example: 'バリデーションエラー'
-                  ErrorMessageEN:
-                    type: string
-                    example: 'validation error'
+                $ref: '#/components/schemas/BadRequestError'
         '401':
           description: Unauthorized error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                    example: 403
-                  ErrorMessageJP:
-                    type: string
-                    example: '認証エラー'
-                  ErrorMessageEN:
-                    type: string
-                    example: 'You are not authorized user'
+                $ref: '#/components/schemas/UnauthorizedError'
         '404':
           description: Not found error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                    example: 404
-                  ErrorMessageJP:
-                    type: string
-                    example: 'そのタスクは存在しません。'
-                  ErrorMessageEN:
-                    type: string
-                    example: 'This task is not exists.'
+                $ref: '#/components/schemas/NotFoundError'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                    example: 500
-                  ErrorMessageJP:
-                    type: string
-                    example: 'サーバでエラーが発生しました。'
-                  ErrorMessageEN:
-                    type: string
-                    example: 'Error occurred at server.'
+                $ref: '#/components/schemas/InternalServerError'
     put:
       tags:
         - task
@@ -721,65 +483,25 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                    example: 400
-                  ErrorMessageJP:
-                    type: string
-                    example: 'バリデーションエラー'
-                  ErrorMessageEN:
-                    type: string
-                    example: 'validation error'
+                $ref: '#/components/schemas/BadRequestError'
         '401':
           description: Unauthorized error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                    example: 403
-                  ErrorMessageJP:
-                    type: string
-                    example: '認証エラー'
-                  ErrorMessageEN:
-                    type: string
-                    example: 'You are not authorized user'
+                $ref: '#/components/schemas/UnauthorizedError'
         '404':
           description: Not found error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                    example: 404
-                  ErrorMessageJP:
-                    type: string
-                    example: 'そのタスクは存在しません。'
-                  ErrorMessageEN:
-                    type: string
-                    example: 'This task is not exists.'
+                $ref: '#/components/schemas/NotFoundError'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                    example: 500
-                  ErrorMessageJP:
-                    type: string
-                    example: 'サーバでエラーが発生しました。'
-                  ErrorMessageEN:
-                    type: string
-                    example: 'Error occurred at server.'
+                $ref: '#/components/schemas/InternalServerError'
     delete:
       tags:
         - task
@@ -812,65 +534,25 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                    example: 400
-                  ErrorMessageJP:
-                    type: string
-                    example: 'バリデーションエラー'
-                  ErrorMessageEN:
-                    type: string
-                    example: 'validation error'
+                $ref: '#/components/schemas/BadRequestError'
         '401':
           description: Unauthorized error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                    example: 403
-                  ErrorMessageJP:
-                    type: string
-                    example: '認証エラー'
-                  ErrorMessageEN:
-                    type: string
-                    example: 'You are not authorized user'
+                $ref: '#/components/schemas/UnauthorizedError'
         '404':
           description: Not found error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                    example: 404
-                  ErrorMessageJP:
-                    type: string
-                    example: 'そのタスクは存在しません。'
-                  ErrorMessageEN:
-                    type: string
-                    example: 'This task is not exists.'
+                $ref: '#/components/schemas/NotFoundError'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                    example: 500
-                  ErrorMessageJP:
-                    type: string
-                    example: 'サーバでエラーが発生しました。'
-                  ErrorMessageEN:
-                    type: string
-                    example: 'Error occurred at server.'
+                $ref: '#/components/schemas/InternalServerError'
   /lists:
     post:
       tags:
@@ -911,52 +593,19 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                  ErrorMessageJP:
-                    type: string
-                  ErrorMessageEN:
-                    type: string
-              example:
-                ErrorCode: 400
-                ErrorMessageJP: 'バリデーションエラー'
-                ErrorMessageEN: 'validation error'
+                $ref: '#/components/schemas/BadRequestError'
         '401':
           description: Unauthorized error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                  ErrorMessageJP:
-                    type: string
-                  ErrorMessageEN:
-                    type: string
-              example:
-                ErrorCode: 403
-                ErrorMessageJP: '認証エラー'
-                ErrorMessageEN: 'You are not authorized user'
+                $ref: '#/components/schemas/UnauthorizedError'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                  ErrorMessageJP:
-                    type: string
-                  ErrorMessageEN:
-                    type: string
-              example:
-                ErrorCode: 500
-                ErrorMessageJP: 'サーバでエラーが発生しました。'
-                ErrorMessageEN: 'Error occurred at server.'
+                $ref: '#/components/schemas/InternalServerError'
     get:
       tags:
         - list
@@ -988,53 +637,19 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                  ErrorMessageJP:
-                    type: string
-                  ErrorMessageEN:
-                    type: string
-              example:
-                ErrorCode: 400
-                ErrorMessageJP: 'バリデーションエラー'
-                ErrorMessageEN: 'validation error'
+                $ref: '#/components/schemas/BadRequestError'
         '401':
           description: Unauthorized error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                  ErrorMessageJP:
-                    type: string
-                  ErrorMessageEN:
-                    type: string
-              example:
-                ErrorCode: 403
-                ErrorMessageJP: '認証エラー'
-                ErrorMessageEN: 'You are not authorized user'
+                $ref: '#/components/schemas/UnauthorizedError'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                  ErrorMessageJP:
-                    type: string
-                  ErrorMessageEN:
-                    type: string
-              example:
-                ErrorCode: 500
-                ErrorMessageJP: 'サーバでエラーが発生しました。'
-                ErrorMessageEN: 'Error occurred at server.'
-
+                $ref: '#/components/schemas/InternalServerError'
   /lists/{listId}:
     get:
       tags:
@@ -1074,52 +689,19 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                  ErrorMessageJP:
-                    type: string
-                  ErrorMessageEN:
-                    type: string
-              example:
-                ErrorCode: 400
-                ErrorMessageJP: 'バリデーションエラー'
-                ErrorMessageEN: 'validation error'
+                $ref: '#/components/schemas/BadRequestError'
         '401':
           description: Unauthorized error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                  ErrorMessageJP:
-                    type: string
-                  ErrorMessageEN:
-                    type: string
-              example:
-                ErrorCode: 403
-                ErrorMessageJP: '認証エラー'
-                ErrorMessageEN: 'You are not authorized user'
+                $ref: '#/components/schemas/UnauthorizedError'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                  ErrorMessageJP:
-                    type: string
-                  ErrorMessageEN:
-                    type: string
-              example:
-                ErrorCode: 500
-                ErrorMessageJP: 'サーバでエラーが発生しました。'
-                ErrorMessageEN: 'Error occurred at server.'
+                $ref: '#/components/schemas/InternalServerError'
     put:
       tags:
         - list
@@ -1168,52 +750,19 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                  ErrorMessageJP:
-                    type: string
-                  ErrorMessageEN:
-                    type: string
-              example:
-                ErrorCode: 400
-                ErrorMessageJP: 'バリデーションエラー'
-                ErrorMessageEN: 'validation error'
+                $ref: '#/components/schemas/BadRequestError'
         '401':
           description: Unauthorized error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                  ErrorMessageJP:
-                    type: string
-                  ErrorMessageEN:
-                    type: string
-              example:
-                ErrorCode: 403
-                ErrorMessageJP: '認証エラー'
-                ErrorMessageEN: 'You are not authorized user'
+                $ref: '#/components/schemas/UnauthorizedError'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                  ErrorMessageJP:
-                    type: string
-                  ErrorMessageEN:
-                    type: string
-              example:
-                ErrorCode: 500
-                ErrorMessageJP: 'サーバでエラーが発生しました。'
-                ErrorMessageEN: 'Error occurred at server.'
+                $ref: '#/components/schemas/InternalServerError'
     delete:
       tags:
         - list
@@ -1252,52 +801,19 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                  ErrorMessageJP:
-                    type: string
-                  ErrorMessageEN:
-                    type: string
-              example:
-                ErrorCode: 400
-                ErrorMessageJP: 'バリデーションエラー'
-                ErrorMessageEN: 'validation error'
+                $ref: '#/components/schemas/BadRequestError'
         '401':
           description: Unauthorized error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                  ErrorMessageJP:
-                    type: string
-                  ErrorMessageEN:
-                    type: string
-              example:
-                ErrorCode: 403
-                ErrorMessageJP: '認証エラー'
-                ErrorMessageEN: 'You are not authorized user'
+                $ref: '#/components/schemas/UnauthorizedError'
         '500':
           description: Internal server error
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  ErrorCode:
-                    type: integer
-                  ErrorMessageJP:
-                    type: string
-                  ErrorMessageEN:
-                    type: string
-              example:
-                ErrorCode: 500
-                ErrorMessageJP: 'サーバでエラーが発生しました。'
-                ErrorMessageEN: 'Error occurred at server.'
+                $ref: '#/components/schemas/InternalServerError'
 components:
   schemas:
     SigninRequest:
