@@ -1,0 +1,1018 @@
+openapi: 3.0.0
+info:
+  title: TechTrain Railway 中級編
+  version: 1.0.0
+  description: TechTrain Railway中級編で使用するTODOAPI
+servers:
+  - url: https://virtserver.swaggerhub.com/INFO_3/TODOApplication/1.0.0
+tags:
+  - name: 'user'
+    description: 'ユーザ関連API'
+  - name: 'task'
+    description: 'TODO関連API'
+  - name: 'list'
+    description: 'リスト関連API'
+paths:
+  /signin:
+    post:
+      tags:
+        - user
+      summary: ユーザ認証API
+      description: ユーザ認証を行います。<br>
+        ユーザのメールアドレス・パスワードによるBasic認証を行い、認証済みユーザには認証トークンを返却します。
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SigninRequest'
+            example:
+              email: 'example@example.com'
+              password: 'password123'
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SigninResponse'
+              example:
+                token: 'sampleToken123'
+        '400':
+          description: Requested data was wrong
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: Unauthorized error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /users:
+    post:
+      tags:
+        - user
+      summary: ユーザ情報作成API
+      description: ユーザ情報を作成します。<br>
+        ユーザの名前情報、メールアドレス、パスワードをリクエストで受け取り、ユーザIDと認証用のトークンを生成しデータベースへ保存します。<br>
+        生成された認証用のトークンがレスポンスとして返されます。
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreateRequest'
+            example:
+              name: 'John Doe'
+              email: 'john@example.com'
+              password: 'john123'
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCreateResponse'
+              example:
+                token: 'sampleToken456'
+        '400':
+          description: Requested data was wrong
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: Unauthorized error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    get:
+      tags:
+        - user
+      summary: ユーザ情報取得API
+      description: ユーザ情報（ユーザ名）を取得します。<br>
+        Authorizationヘッダーに認証情報（JWTトークン）を `Bearer XXX` の形式で付与することで、認証処理やユーザ情報の検索を行います。
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          description: 認証トークン(JWT) `Bearer XXX`
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserGetResponse'
+              example:
+                name: 'John Doe'
+        '400':
+          description: Requested data was wrong
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: Unauthorized error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    put:
+      tags:
+        - user
+      summary: ユーザ情報更新API
+      description: ユーザ情報（ユーザ名）の更新をします。
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          description: 認証トークン(JWT) `Bearer XXX`
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdateRequest'
+            example:
+              name: 'John Smith'
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserUpdateResponse'
+              example:
+                name: 'John Smith'
+        '400':
+          description: Requested data was wrong
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: Unauthorized error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /lists/{listId}/tasks:
+    get:
+      tags:
+        - task
+      summary: タスク一覧取得API
+      description: タスク一覧を取得します。
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          description: 認証トークン(JWT) `Bearer XXX`
+          schema:
+            type: string
+        - name: listId
+          in: path
+          required: true
+          description: リストid
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/taskListGetResponse'
+              example:
+                listId: '12345'
+                name: 'Work Tasks'
+                tasks:
+                  - id: '1'
+                    title: 'Write report'
+                    detail: 'Write monthly report'
+                    limit: '2023-08-01T12:00:00'
+                    done: true
+        '400':
+          description: Requested data was wrong
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: Unauthorized error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    post:
+      tags:
+        - task
+      summary: タスク作成API
+      description: タスクの新規作成をします。
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          description: 認証トークン(JWT) `Bearer XXX`
+          schema:
+            type: string
+        - name: listId
+          in: path
+          required: true
+          description: リストid
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/taskCreateRequest'
+            example:
+              title: 'New Task'
+              detail: 'Detail about the new task'
+              done: false
+              limit: '2023-08-05T12:00:00'
+      responses:
+        '200':
+          description: A successful response.
+        '400':
+          description: Requested data was wrong
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: Unauthorized error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /lists/{listId}/tasks/{taskId}:
+    get:
+      tags:
+        - task
+      summary: タスク取得API
+      description: タスク情報を取得します。
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          description: 認証トークン(JWT) `Bearer XXX`
+          schema:
+            type: string
+        - name: listId
+          in: path
+          required: true
+          description: リストid
+          schema:
+            type: string
+        - name: taskId
+          in: path
+          required: true
+          description: タスクid
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/taskGetResponse'
+        '400':
+          description: Requested data was wrong
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: Unauthorized error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: Not found error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    put:
+      tags:
+        - task
+      summary: タスク更新API
+      description: タスクの更新をします。
+      parameters:
+        - name: listId
+          in: path
+          required: true
+          description: リストid
+          schema:
+            type: string
+        - name: taskId
+          in: path
+          required: true
+          description: タスクid
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          required: true
+          description: 認証トークン(JWT) `Bearer XXX`
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/taskUpdateRequest'
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/taskUpdateResponse'
+        '400':
+          description: Requested data was wrong
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: Unauthorized error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: Not found error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    delete:
+      tags:
+        - task
+      summary: タスク削除API
+      description: タスクの削除をします。
+      parameters:
+        - name: listId
+          in: path
+          required: true
+          description: リストid
+          schema:
+            type: string
+        - name: taskId
+          in: path
+          required: true
+          description: タスクid
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          required: true
+          description: 認証トークン(JWT) `Bearer XXX`
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+        '400':
+          description: Requested data was wrong
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: Unauthorized error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: Not found error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /lists:
+    post:
+      tags:
+        - list
+      summary: リスト作成API
+      description: リストの新規作成します。
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          description: 認証トークン(JWT) `Bearer XXX`
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/listCreateRequest'
+            example:
+              title: 'string'
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listCreateResponse'
+        '400':
+          description: Requested data was wrong
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: Unauthorized error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    get:
+      tags:
+        - list
+      summary: リスト一覧取得API
+      description: リストの一覧を取得します。
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          description: 認証トークン(JWT) `Bearer XXX`
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listsGetResponse'
+        '400':
+          description: Requested data was wrong
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: Unauthorized error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /lists/{listId}:
+    get:
+      tags:
+        - list
+      summary: リスト取得API
+      description: リストを取得します。
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          description: 認証トークン(JWT) `Bearer XXX`
+          schema:
+            type: string
+        - name: listId
+          in: path
+          required: true
+          description: listID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listGetResponse'
+              example:
+                id: 'string'
+                title: 'string'
+        '400':
+          description: Requested data was wrong
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: Unauthorized error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    put:
+      tags:
+        - list
+      summary: リスト更新API
+      description: リストを更新します。
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          description: 認証トークン(JWT) `Bearer XXX`
+          schema:
+            type: string
+        - name: listId
+          in: path
+          required: true
+          description: listID
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/listPutRequest'
+            example:
+              title: 'string'
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listPutResponse'
+              example:
+                id: 'string'
+                title: 'string'
+        '400':
+          description: Requested data was wrong
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: Unauthorized error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    delete:
+      tags:
+        - list
+      summary: リスト削除API
+      description: リストを削除します。
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          description: 認証トークン(JWT) `Bearer XXX`
+          schema:
+            type: string
+        - name: listId
+          in: path
+          required: true
+          description: listID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  title:
+                    type: string
+              example:
+                id: 'string'
+                title: 'string'
+        '400':
+          description: Requested data was wrong
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: Unauthorized error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+components:
+  schemas:
+    SigninRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          description: メールアドレス
+        password:
+          type: string
+          description: パスワード
+      required:
+        - email
+        - password
+    SigninResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          description: クライアント側で保存するトークン
+      required:
+        - token
+    UserCreateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: ユーザ名
+        email:
+          type: string
+          description: メールアドレス
+        password:
+          type: string
+          description: パスワード
+      required:
+        - name
+        - email
+        - password
+    UserCreateResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          description: クライアント側で保存するトークン
+      required:
+        - token
+    UserGetResponse:
+      type: object
+      properties:
+        name:
+          type: string
+          description: ユーザ名
+      required:
+        - name
+    UserUpdateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: ユーザ名
+      required:
+        - name
+    UserUpdateResponse:
+      type: object
+      properties:
+        name:
+          type: string
+          description: ユーザ名
+      required:
+        - name
+    taskCreateRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          description: タスクタイトル
+        detail:
+          type: string
+          description: タスク詳細情報
+        done:
+          type: boolean
+          description: 完了済みかどうか
+        limit:
+          type: string
+          description: タスクの期限(UTC+0)
+          example: YYYY-MM-DDTHH:MM:SS
+      required:
+        - title
+        - detail
+        - done
+    taskGetResponse:
+      type: object
+      properties:
+        taskId:
+          type: string
+          description: タスクid
+        title:
+          type: string
+          description: タスク名
+        detail:
+          type: string
+          description: タスク詳細情報
+        done:
+          type: boolean
+          description: 完了済みかどうか
+        limit:
+          type: string
+          description: タスクの期限(UTC+0)
+          example: YYYY-MM-DDTHH:MM:SS
+        listId:
+          type: string
+          description: タスクに紐づくリストid
+      required:
+        - taskId
+        - title
+        - detail
+        - done
+        - listId
+    taskUpdateRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          description: タスク名
+        detail:
+          type: string
+          description: TODO詳細情報
+        done:
+          type: boolean
+          description: 完了済みかどうか
+        limit:
+          type: string
+          description: タスクの期限(UTC+0)
+          example: YYYY-MM-DDTHH:MM:SS
+      required:
+        - title
+        - detail
+        - done
+    taskUpdateResponse:
+      type: object
+      properties:
+        taskId:
+          type: string
+          description: タスクid
+        title:
+          type: string
+          description: タスク名
+        detail:
+          type: string
+          description: タスク詳細情報
+        done:
+          type: boolean
+          description: 完了済みかどうか
+        limit:
+          type: string
+          description: タスクの期限(UTC+0)
+          example: YYYY-MM-DDTHH:MM:SS
+        listId:
+          type: string
+          description: リストid
+      required:
+        - taskId
+        - title
+        - detail
+        - done
+        - listId
+    taskListGetResponse:
+      type: object
+      properties:
+        listId:
+          type: string
+          description: リストid
+        name:
+          type: string
+          description: リスト名
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/taskData'
+      required:
+        - listId
+        - name
+        - tasks
+    taskData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: タスクid
+        title:
+          type: string
+          description: タスク名
+        detail:
+          type: string
+          description: タスク詳細情報
+        limit:
+          type: string
+          description: タスクの期限(UTC+0)
+          example: YYYY-MM-DDTHH:MM:SS
+        done:
+          type: boolean
+          description: 完了かどうか
+      required:
+        - id
+        - title
+        - detail
+        - done
+    listCreateRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          description: リスト名
+    listPutRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          description: リスト名
+    listPutResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: リストid
+        title:
+          type: string
+          description: リスト名
+    listCreateResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: リストid
+        title:
+          type: string
+          description: リスト名
+    listsGetResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/listsGetResponseItem'
+    listsGetResponseItem:
+      type: object
+      properties:
+        id:
+          type: string
+          description: リストid
+        title:
+          type: string
+          description: リスト名
+    listData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: リストid
+        title:
+          type: string
+          description: リスト名
+    listGetResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: リストid
+        title:
+          type: string
+          description: リスト名
+
+    NotFoundError:
+      type: object
+      properties:
+        ErrorCode:
+          type: number
+          example: 404
+          description: エラーコード
+        ErrorMessageJP:
+          type: string
+          example: そのタスクは存在しません。
+          description: エラーメッセージ（日本語）
+        ErrorMessageEN:
+          type: string
+          example: This task is not exists.
+          description: エラーメッセージ（英語）
+    UnauthorizedError:
+      type: object
+      properties:
+        ErrorCode:
+          type: number
+          example: 403
+          description: エラーコード
+        ErrorMessageJP:
+          type: string
+          example: 認証エラー
+          description: エラーメッセージ（日本語）
+        ErrorMessageEN:
+          type: string
+          example: You are not authorized user
+          description: エラーメッセージ（英語）
+    BadRequestError:
+      type: object
+      properties:
+        ErrorCode:
+          type: number
+          example: 400
+          description: エラーコード
+        ErrorMessageJP:
+          type: string
+          example: バリデーションエラー
+          description: エラーメッセージ（日本語）
+        ErrorMessageEN:
+          type: string
+          example: validation error
+          description: エラーメッセージ（英語）
+    InternalServerError:
+      type: object
+      properties:
+        ErrorCode:
+          type: number
+          example: 500
+          description: エラーコード
+        ErrorMessageJP:
+          type: string
+          example: サーバでエラーが発生しました。
+          description: エラーメッセージ（日本語）
+        ErrorMessageEN:
+          type: string
+          example: Error occurred at server.
+          description: エラーメッセージ（英語）
