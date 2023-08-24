@@ -321,22 +321,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/taskListGetResponse'
-                type: object
-                properties:
-                  taskId:
-                    type: string
-                  title:
-                    type: string
-                  detail:
-                    type: string
-                  done:
-                    type: boolean
-                  limit:
-                    type: string
-                    example: YYYY-MM-DDTHH:MM:SS
-                  listId:
-                    type: string
+                $ref: '#/components/schemas/taskGetResponse'
         '400':
           description: Requested data was wrong
           content:
