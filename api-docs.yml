@@ -1298,3 +1298,332 @@ paths:
                 ErrorCode: 500
                 ErrorMessageJP: 'サーバでエラーが発生しました。'
                 ErrorMessageEN: 'Error occurred at server.'
+components:
+  schemas:
+    SigninRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          description: メールアドレス
+        password:
+          type: string
+          description: パスワード
+      required:
+        - email
+        - password
+    SigninResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          description: クライアント側で保存するトークン
+      required:
+        - token
+    UserCreateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: ユーザ名
+        email:
+          type: string
+          description: メールアドレス
+        password:
+          type: string
+          description: パスワード
+      required:
+        - name
+        - email
+        - password
+    UserCreateResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          description: クライアント側で保存するトークン
+      required:
+        - token
+    UserGetResponse:
+      type: object
+      properties:
+        name:
+          type: string
+          description: ユーザ名
+      required:
+        - name
+    UserUpdateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: ユーザ名
+      required:
+        - name
+    UserUpdateResponse:
+      type: object
+      properties:
+        name:
+          type: string
+          description: ユーザ名
+      required:
+        - name
+    taskCreateRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          description: タスクタイトル
+        detail:
+          type: string
+          description: タスク詳細情報
+        done:
+          type: boolean
+          description: 完了済みかどうか
+        limit:
+          type: string
+          format: date-time
+          description: タスクの期限(UTC+0)
+      required:
+        - title
+        - detail
+        - done
+    taskGetResponse:
+      type: object
+      properties:
+        taskId:
+          type: string
+          description: タスクid
+        title:
+          type: string
+          description: タスク名
+        detail:
+          type: string
+          description: タスク詳細情報
+        done:
+          type: boolean
+          description: 完了済みかどうか
+        limit:
+          type: string
+          format: date-time
+          description: タスクの期限(UTC+0)
+        listId:
+          type: string
+          description: タスクに紐づくリストid
+      required:
+        - taskId
+        - title
+        - detail
+        - done
+        - listId
+    taskUpdateRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          description: タスク名
+        detail:
+          type: string
+          description: TODO詳細情報
+        done:
+          type: boolean
+          description: 完了済みかどうか
+        limit:
+          type: string
+          format: date-time
+          description: タスクの期限(UTC+0)
+      required:
+        - title
+        - detail
+        - done
+    taskUpdateResponse:
+      type: object
+      properties:
+        taskId:
+          type: string
+          description: タスクid
+        title:
+          type: string
+          description: タスク名
+        detail:
+          type: string
+          description: タスク詳細情報
+        done:
+          type: boolean
+          description: 完了済みかどうか
+        limit:
+          type: string
+          format: date-time
+          description: タスクの期限(UTC+0)
+        listId:
+          type: string
+          description: リストid
+      required:
+        - taskId
+        - title
+        - detail
+        - done
+        - listId
+    taskListGetResponse:
+      type: object
+      properties:
+        listId:
+          type: string
+          description: リストid
+        name:
+          type: string
+          description: リスト名
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/taskData'
+      required:
+        - listId
+        - name
+        - tasks
+    taskData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: タスクid
+        title:
+          type: string
+          description: タスク名
+        detail:
+          type: string
+          description: タスク詳細情報
+        limit:
+          type: string
+          description: タスクの期限(UTC+0)
+          example: YYYY-MM-DDTHH:MM:SS
+        done:
+          type: boolean
+          description: 完了かどうか
+      required:
+        - id
+        - title
+        - detail
+        - done
+    listCreateRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          description: リスト名
+    listPutRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          description: リスト名
+    listPutResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: リストid
+        title:
+          type: string
+          description: リスト名
+    listCreateResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: リストid
+        title:
+          type: string
+          description: リスト名
+    listsGetResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/listsGetResponseItem'
+    listsGetResponseItem:
+      type: object
+      properties:
+        id:
+          type: string
+          description: リストid
+        title:
+          type: string
+          description: リスト名
+    listData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: リストid
+        title:
+          type: string
+          description: リスト名
+    listGetResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: リストid
+        title:
+          type: string
+          description: リスト名
+
+    NotFoundError:
+      type: object
+      properties:
+        ErrorCode:
+          type: number
+          example: 404
+          description: エラーコード
+        ErrorMessageJP:
+          type: string
+          example: そのタスクは存在しません。
+          description: エラーメッセージ（日本語）
+        ErrorMessageEN:
+          type: string
+          example: This task is not exists.
+          description: エラーメッセージ（英語）
+    UnauthorizedError:
+      type: object
+      properties:
+        ErrorCode:
+          type: number
+          example: 403
+          description: エラーコード
+        ErrorMessageJP:
+          type: string
+          example: 認証エラー
+          description: エラーメッセージ（日本語）
+        ErrorMessageEN:
+          type: string
+          example: You are not authorized user
+          description: エラーメッセージ（英語）
+    BadRequestError:
+      type: object
+      properties:
+        ErrorCode:
+          type: number
+          example: 400
+          description: エラーコード
+        ErrorMessageJP:
+          type: string
+          example: バリデーションエラー
+          description: エラーメッセージ（日本語）
+        ErrorMessageEN:
+          type: string
+          example: validation error
+          description: エラーメッセージ（英語）
+    InternalServerError:
+      type: object
+      properties:
+        ErrorCode:
+          type: number
+          example: 500
+          description: エラーコード
+        ErrorMessageJP:
+          type: string
+          example: サーバでエラーが発生しました。
+          description: エラーメッセージ（日本語）
+        ErrorMessageEN:
+          type: string
+          example: Error occurred at server.
+          description: エラーメッセージ（英語）
