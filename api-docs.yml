@@ -25,12 +25,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                password:
-                  type: string
+              $ref: '#/components/schemas/SigninRequest'
             example:
               email: 'example@example.com'
               password: 'password123'
@@ -40,10 +35,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  token:
-                    type: string
+                $ref: '#/components/schemas/SigninResponse'
               example:
                 token: 'sampleToken123'
         '400':
@@ -77,14 +69,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                email:
-                  type: string
-                password:
-                  type: string
+              $ref: '#/components/schemas/UserCreateRequest'
             example:
               name: 'John Doe'
               email: 'john@example.com'
@@ -95,10 +80,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  token:
-                    type: string
+                $ref: '#/components/schemas/UserCreateResponse'
               example:
                 token: 'sampleToken456'
         '400':
@@ -139,10 +121,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  name:
-                    type: string
+                $ref: '#/components/schemas/UserGetResponse'
               example:
                 name: 'John Doe'
         '400':
@@ -179,10 +158,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
+              $ref: '#/components/schemas/UserUpdateRequest'
             example:
               name: 'John Smith'
       responses:
@@ -191,10 +167,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  name:
-                    type: string
+                $ref: '#/components/schemas/UserUpdateResponse'
               example:
                 name: 'John Smith'
         '400':
@@ -240,28 +213,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  listId:
-                    type: string
-                  name:
-                    type: string
-                  tasks:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                        title:
-                          type: string
-                        detail:
-                          type: string
-                        limit:
-                          type: string
-                          format: date-time
-                        done:
-                          type: boolean
+                $ref: '#/components/schemas/taskListGetResponse'
               example:
                 listId: '12345'
                 name: 'Work Tasks'
@@ -311,17 +263,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                title:
-                  type: string
-                detail:
-                  type: string
-                done:
-                  type: boolean
-                limit:
-                  type: string
-                  format: date-time
+              $ref: '#/components/schemas/taskCreateRequest'
             example:
               title: 'New Task'
               detail: 'Detail about the new task'
@@ -379,6 +321,7 @@ paths:
           content:
             application/json:
               schema:
+                $ref: '#/components/schemas/taskListGetResponse'
                 type: object
                 properties:
                   taskId:
@@ -391,7 +334,7 @@ paths:
                     type: boolean
                   limit:
                     type: string
-                    format: date-time
+                    example: YYYY-MM-DDTHH:MM:SS
                   listId:
                     type: string
         '400':
@@ -446,38 +389,14 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                title:
-                  type: string
-                detail:
-                  type: string
-                done:
-                  type: boolean
-                limit:
-                  type: string
-                  format: date-time
+              $ref: '#/components/schemas/taskUpdateRequest'
       responses:
         '200':
           description: A successful response.
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  taskId:
-                    type: string
-                  title:
-                    type: string
-                  detail:
-                    type: string
-                  done:
-                    type: boolean
-                  limit:
-                    type: string
-                    format: date-time
-                  listId:
-                    type: string
+                $ref: '#/components/schemas/taskUpdateResponse'
         '400':
           description: Requested data was wrong
           content:
@@ -570,10 +489,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                title:
-                  type: string
+              $ref: '#/components/schemas/listCreateRequest'
             example:
               title: 'string'
       responses:
@@ -582,12 +498,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                  title:
-                    type: string
+                $ref: '#/components/schemas/listCreateResponse'
         '400':
           description: Requested data was wrong
           content:
@@ -624,14 +535,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                    title:
-                      type: string
+                $ref: '#/components/schemas/listsGetResponse'
         '400':
           description: Requested data was wrong
           content:
@@ -675,12 +579,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                  title:
-                    type: string
+                $ref: '#/components/schemas/listGetResponse'
               example:
                 id: 'string'
                 title: 'string'
@@ -724,10 +623,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                title:
-                  type: string
+              $ref: '#/components/schemas/listPutRequest'
             example:
               title: 'string'
       responses:
@@ -736,12 +632,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                  title:
-                    type: string
+                $ref: '#/components/schemas/listPutResponse'
               example:
                 id: 'string'
                 title: 'string'
@@ -898,8 +789,8 @@ components:
           description: 完了済みかどうか
         limit:
           type: string
-          format: date-time
           description: タスクの期限(UTC+0)
+          example: YYYY-MM-DDTHH:MM:SS
       required:
         - title
         - detail
@@ -921,7 +812,7 @@ components:
           description: 完了済みかどうか
         limit:
           type: string
-          format: date-time
+          example: YYYY-MM-DDTHH:MM:SS
           description: タスクの期限(UTC+0)
         listId:
           type: string
@@ -946,7 +837,7 @@ components:
           description: 完了済みかどうか
         limit:
           type: string
-          format: date-time
+          example: YYYY-MM-DDTHH:MM:SS
           description: タスクの期限(UTC+0)
       required:
         - title
@@ -969,7 +860,7 @@ components:
           description: 完了済みかどうか
         limit:
           type: string
-          format: date-time
+          example: YYYY-MM-DDTHH:MM:SS
           description: タスクの期限(UTC+0)
         listId:
           type: string
