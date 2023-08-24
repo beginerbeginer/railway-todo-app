@@ -18,8 +18,7 @@ paths:
       tags:
         - user
       summary: ユーザ認証API
-      description: |
-        ユーザ認証を行います。
+      description: ユーザ認証を行います。<br>
         ユーザのメールアドレス・パスワードによるBasic認証を行い、認証済みユーザには認証トークンを返却します。
       requestBody:
         content:
@@ -61,9 +60,8 @@ paths:
       tags:
         - user
       summary: ユーザ情報作成API
-      description: |
-        ユーザ情報を作成します。
-        ユーザの名前情報、メールアドレス、パスワードをリクエストで受け取り、ユーザIDと認証用のトークンを生成しデータベースへ保存します。
+      description: ユーザ情報を作成します。<br>
+        ユーザの名前情報、メールアドレス、パスワードをリクエストで受け取り、ユーザIDと認証用のトークンを生成しデータベースへ保存します。<br>
         生成された認証用のトークンがレスポンスとして返されます。
       requestBody:
         content:
@@ -105,14 +103,13 @@ paths:
       tags:
         - user
       summary: ユーザ情報取得API
-      description: |
-        ユーザ情報（ユーザ名）を取得します。
-        Authorizationヘッダーに認証情報（JWTトークン）を Bearer XXX の形式で付与することで、認証処理やユーザ情報の検索を行います。
+      description: ユーザ情報（ユーザ名）を取得します。<br>
+        Authorizationヘッダーに認証情報（JWTトークン）を `Bearer XXX` の形式で付与することで、認証処理やユーザ情報の検索を行います。
       parameters:
         - name: Authorization
           in: header
           required: true
-          description: 認証トークン(JWT) Bearer XXX
+          description: 認証トークン(JWT) `Bearer XXX`
           schema:
             type: string
       responses:
@@ -151,7 +148,7 @@ paths:
         - name: Authorization
           in: header
           required: true
-          description: 認証トークン(JWT) Bearer XXX
+          description: 認証トークン(JWT) `Bearer XXX`
           schema:
             type: string
       requestBody:
@@ -198,7 +195,7 @@ paths:
         - name: Authorization
           in: header
           required: true
-          description: 認証トークン(JWT) Bearer XXX
+          description: 認証トークン(JWT) `Bearer XXX`
           schema:
             type: string
         - name: listId
@@ -250,7 +247,7 @@ paths:
         - name: Authorization
           in: header
           required: true
-          description: 認証トークン(JWT) Bearer XXX
+          description: 認証トークン(JWT) `Bearer XXX`
           schema:
             type: string
         - name: listId
@@ -300,7 +297,7 @@ paths:
         - name: Authorization
           in: header
           required: true
-          description: 認証トークン(JWT) Bearer XXX
+          description: 認証トークン(JWT) `Bearer XXX`
           schema:
             type: string
         - name: listId
@@ -367,7 +364,7 @@ paths:
         - name: Authorization
           in: header
           required: true
-          description: 認証トークン(JWT) Bearer XXX
+          description: 認証トークン(JWT) `Bearer XXX`
           schema:
             type: string
       requestBody:
@@ -427,7 +424,7 @@ paths:
         - name: Authorization
           in: header
           required: true
-          description: 認証トークン(JWT) Bearer XXX
+          description: 認証トークン(JWT) `Bearer XXX`
           schema:
             type: string
       responses:
@@ -467,7 +464,7 @@ paths:
         - in: header
           name: Authorization
           required: true
-          description: 認証トークン(JWT) Bearer XXX
+          description: 認証トークン(JWT) `Bearer XXX`
           schema:
             type: string
       requestBody:
@@ -511,7 +508,7 @@ paths:
         - in: header
           name: Authorization
           required: true
-          description: 認証トークン(JWT) Bearer XXX
+          description: 認証トークン(JWT) `Bearer XXX`
           schema:
             type: string
       responses:
@@ -549,7 +546,7 @@ paths:
         - name: Authorization
           in: header
           required: true
-          description: 認証トークン(JWT) Bearer XXX
+          description: 認証トークン(JWT) `Bearer XXX`
           schema:
             type: string
         - name: listId
@@ -595,7 +592,7 @@ paths:
         - name: Authorization
           in: header
           required: true
-          description: 認証トークン(JWT) Bearer XXX
+          description: 認証トークン(JWT) `Bearer XXX`
           schema:
             type: string
         - name: listId
@@ -648,7 +645,7 @@ paths:
         - name: Authorization
           in: header
           required: true
-          description: 認証トークン(JWT) Bearer XXX
+          description: 認証トークン(JWT) `Bearer XXX`
           schema:
             type: string
         - name: listId
