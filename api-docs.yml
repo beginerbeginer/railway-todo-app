@@ -794,8 +794,8 @@ components:
           description: 完了済みかどうか
         limit:
           type: string
-          example: YYYY-MM-DDTHH:MM:SS
           description: タスクの期限(UTC+0)
+          example: YYYY-MM-DDTHH:MM:SS
         listId:
           type: string
           description: タスクに紐づくリストid
@@ -819,8 +819,8 @@ components:
           description: 完了済みかどうか
         limit:
           type: string
-          example: YYYY-MM-DDTHH:MM:SS
           description: タスクの期限(UTC+0)
+          example: YYYY-MM-DDTHH:MM:SS
       required:
         - title
         - detail
@@ -842,8 +842,8 @@ components:
           description: 完了済みかどうか
         limit:
           type: string
-          example: YYYY-MM-DDTHH:MM:SS
           description: タスクの期限(UTC+0)
+          example: YYYY-MM-DDTHH:MM:SS
         listId:
           type: string
           description: リストid
