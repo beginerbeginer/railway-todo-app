@@ -5,10 +5,17 @@ info:
   description: TechTrain Railway中級編で使用するTODOAPI
 servers:
   - url: https://virtserver.swaggerhub.com/INFO_3/TODOApplication/1.0.0
+tags:
+  - name: 'user'
+    description: 'ユーザ関連API'
+  - name: 'task'
+    description: 'TODO関連API'
 
 paths:
   /signin:
     post:
+      tags:
+        - user
       summary: ユーザ認証API
       description: |
         ユーザ認証を行います。
@@ -90,7 +97,96 @@ paths:
                 ErrorMessageJP: 'サーバでエラーが発生しました。'
                 ErrorMessageEN: 'Error occurred at server.'
   /users:
+    post:
+      tags:
+        - user
+      summary: ユーザ情報作成API
+      description: |
+        ユーザ情報を作成します。
+        ユーザの名前情報、メールアドレス、パスワードをリクエストで受け取り、ユーザIDと認証用のトークンを生成しデータベースへ保存します。
+        生成された認証用のトークンがレスポンスとして返されます。
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+            example:
+              name: 'John Doe'
+              email: 'john@example.com'
+              password: 'john123'
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+              example:
+                token: 'sampleToken456'
+        '400':
+          description: Requested data was wrong
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ErrorCode:
+                    type: integer
+                  ErrorMessageJP:
+                    type: string
+                  ErrorMessageEN:
+                    type: string
+              example:
+                ErrorCode: 400
+                ErrorMessageJP: 'バリデーションエラー'
+                ErrorMessageEN: 'validation error'
+        '401':
+          description: Unauthorized error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ErrorCode:
+                    type: integer
+                  ErrorMessageJP:
+                    type: string
+                  ErrorMessageEN:
+                    type: string
+              example:
+                ErrorCode: 401
+                ErrorMessageJP: '認証エラー'
+                ErrorMessageEN: 'You are not authorized user'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ErrorCode:
+                    type: integer
+                  ErrorMessageJP:
+                    type: string
+                  ErrorMessageEN:
+                    type: string
+              example:
+                ErrorCode: 500
+                ErrorMessageJP: 'サーバでエラーが発生しました。'
+                ErrorMessageEN: 'Error occurred at server.'
     get:
+      tags:
+        - user
       summary: ユーザ情報取得API
       description: |
         ユーザ情報（ユーザ名）を取得します。
@@ -166,6 +262,8 @@ paths:
                 ErrorMessageJP: 'サーバでエラーが発生しました。'
                 ErrorMessageEN: 'Error occurred at server.'
     put:
+      tags:
+        - user
       summary: ユーザ情報更新API
       description: ユーザ情報（ユーザ名）の更新をします。
       parameters:
@@ -250,6 +348,8 @@ paths:
                 ErrorMessageEN: 'Error occurred at server.'
   /lists/{listId}/tasks:
     get:
+      tags:
+        - task
       summary: タスク一覧取得API
       description: タスク一覧を取得します。
       parameters:
@@ -354,6 +454,8 @@ paths:
                 ErrorMessageJP: 'サーバでエラーが発生しました。'
                 ErrorMessageEN: 'Error occurred at server.'
     post:
+      tags:
+        - task
       summary: タスク作成API
       description: タスクの新規作成をします。
       parameters:
@@ -445,6 +547,8 @@ paths:
                 ErrorMessageEN: 'Error occurred at server.'
   /lists/{listId}/tasks/{taskId}:
     get:
+      tags:
+        - task
       summary: タスク取得API
       description: タスク情報を取得します。
       parameters:
@@ -552,6 +656,8 @@ paths:
                     type: string
                     example: 'Error occurred at server.'
     put:
+      tags:
+        - task
       summary: タスク更新API
       description: タスクの更新をします。
       parameters:
@@ -674,6 +780,8 @@ paths:
                     type: string
                     example: 'Error occurred at server.'
     delete:
+      tags:
+        - task
       summary: タスク削除API
       description: タスクの削除をします。
       parameters:
