@@ -10,7 +10,8 @@ tags:
     description: 'ユーザ関連API'
   - name: 'task'
     description: 'TODO関連API'
-
+  - name: 'list'
+    description: 'リスト関連API'
 paths:
   /signin:
     post:
@@ -870,3 +871,430 @@ paths:
                   ErrorMessageEN:
                     type: string
                     example: 'Error occurred at server.'
+  /lists:
+    post:
+      tags:
+        - list
+      summary: リスト作成API
+      description: リストの新規作成します。
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          description: 認証トークン(JWT) Bearer XXX
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+            example:
+              title: 'string'
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  title:
+                    type: string
+        '400':
+          description: Requested data was wrong
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ErrorCode:
+                    type: integer
+                  ErrorMessageJP:
+                    type: string
+                  ErrorMessageEN:
+                    type: string
+              example:
+                ErrorCode: 400
+                ErrorMessageJP: 'バリデーションエラー'
+                ErrorMessageEN: 'validation error'
+        '401':
+          description: Unauthorized error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ErrorCode:
+                    type: integer
+                  ErrorMessageJP:
+                    type: string
+                  ErrorMessageEN:
+                    type: string
+              example:
+                ErrorCode: 403
+                ErrorMessageJP: '認証エラー'
+                ErrorMessageEN: 'You are not authorized user'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ErrorCode:
+                    type: integer
+                  ErrorMessageJP:
+                    type: string
+                  ErrorMessageEN:
+                    type: string
+              example:
+                ErrorCode: 500
+                ErrorMessageJP: 'サーバでエラーが発生しました。'
+                ErrorMessageEN: 'Error occurred at server.'
+    get:
+      tags:
+        - list
+      summary: リスト一覧取得API
+      description: リストの一覧を取得します。
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          description: 認証トークン(JWT) Bearer XXX
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    title:
+                      type: string
+        '400':
+          description: Requested data was wrong
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ErrorCode:
+                    type: integer
+                  ErrorMessageJP:
+                    type: string
+                  ErrorMessageEN:
+                    type: string
+              example:
+                ErrorCode: 400
+                ErrorMessageJP: 'バリデーションエラー'
+                ErrorMessageEN: 'validation error'
+        '401':
+          description: Unauthorized error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ErrorCode:
+                    type: integer
+                  ErrorMessageJP:
+                    type: string
+                  ErrorMessageEN:
+                    type: string
+              example:
+                ErrorCode: 403
+                ErrorMessageJP: '認証エラー'
+                ErrorMessageEN: 'You are not authorized user'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ErrorCode:
+                    type: integer
+                  ErrorMessageJP:
+                    type: string
+                  ErrorMessageEN:
+                    type: string
+              example:
+                ErrorCode: 500
+                ErrorMessageJP: 'サーバでエラーが発生しました。'
+                ErrorMessageEN: 'Error occurred at server.'
+
+  /lists/{listId}:
+    get:
+      tags:
+        - list
+      summary: リスト取得API
+      description: リストを取得します。
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          description: 認証トークン(JWT) Bearer XXX
+          schema:
+            type: string
+        - name: listId
+          in: path
+          required: true
+          description: listID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  title:
+                    type: string
+              example:
+                id: 'string'
+                title: 'string'
+        '400':
+          description: Requested data was wrong
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ErrorCode:
+                    type: integer
+                  ErrorMessageJP:
+                    type: string
+                  ErrorMessageEN:
+                    type: string
+              example:
+                ErrorCode: 400
+                ErrorMessageJP: 'バリデーションエラー'
+                ErrorMessageEN: 'validation error'
+        '401':
+          description: Unauthorized error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ErrorCode:
+                    type: integer
+                  ErrorMessageJP:
+                    type: string
+                  ErrorMessageEN:
+                    type: string
+              example:
+                ErrorCode: 403
+                ErrorMessageJP: '認証エラー'
+                ErrorMessageEN: 'You are not authorized user'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ErrorCode:
+                    type: integer
+                  ErrorMessageJP:
+                    type: string
+                  ErrorMessageEN:
+                    type: string
+              example:
+                ErrorCode: 500
+                ErrorMessageJP: 'サーバでエラーが発生しました。'
+                ErrorMessageEN: 'Error occurred at server.'
+    put:
+      tags:
+        - list
+      summary: リスト更新API
+      description: リストを更新します。
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          description: 認証トークン(JWT) Bearer XXX
+          schema:
+            type: string
+        - name: listId
+          in: path
+          required: true
+          description: listID
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+            example:
+              title: 'string'
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  title:
+                    type: string
+              example:
+                id: 'string'
+                title: 'string'
+        '400':
+          description: Requested data was wrong
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ErrorCode:
+                    type: integer
+                  ErrorMessageJP:
+                    type: string
+                  ErrorMessageEN:
+                    type: string
+              example:
+                ErrorCode: 400
+                ErrorMessageJP: 'バリデーションエラー'
+                ErrorMessageEN: 'validation error'
+        '401':
+          description: Unauthorized error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ErrorCode:
+                    type: integer
+                  ErrorMessageJP:
+                    type: string
+                  ErrorMessageEN:
+                    type: string
+              example:
+                ErrorCode: 403
+                ErrorMessageJP: '認証エラー'
+                ErrorMessageEN: 'You are not authorized user'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ErrorCode:
+                    type: integer
+                  ErrorMessageJP:
+                    type: string
+                  ErrorMessageEN:
+                    type: string
+              example:
+                ErrorCode: 500
+                ErrorMessageJP: 'サーバでエラーが発生しました。'
+                ErrorMessageEN: 'Error occurred at server.'
+    delete:
+      tags:
+        - list
+      summary: リスト削除API
+      description: リストを削除します。
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          description: 認証トークン(JWT) Bearer XXX
+          schema:
+            type: string
+        - name: listId
+          in: path
+          required: true
+          description: listID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  title:
+                    type: string
+              example:
+                id: 'string'
+                title: 'string'
+        '400':
+          description: Requested data was wrong
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ErrorCode:
+                    type: integer
+                  ErrorMessageJP:
+                    type: string
+                  ErrorMessageEN:
+                    type: string
+              example:
+                ErrorCode: 400
+                ErrorMessageJP: 'バリデーションエラー'
+                ErrorMessageEN: 'validation error'
+        '401':
+          description: Unauthorized error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ErrorCode:
+                    type: integer
+                  ErrorMessageJP:
+                    type: string
+                  ErrorMessageEN:
+                    type: string
+              example:
+                ErrorCode: 403
+                ErrorMessageJP: '認証エラー'
+                ErrorMessageEN: 'You are not authorized user'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ErrorCode:
+                    type: integer
+                  ErrorMessageJP:
+                    type: string
+                  ErrorMessageEN:
+                    type: string
+              example:
+                ErrorCode: 500
+                ErrorMessageJP: 'サーバでエラーが発生しました。'
+                ErrorMessageEN: 'Error occurred at server.'
